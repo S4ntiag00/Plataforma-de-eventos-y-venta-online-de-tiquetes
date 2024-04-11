@@ -1,0 +1,11 @@
+
+q
+ASistemaInventarioPPR/src/view/InternalFrame_GestionarCliente.form,b\e\be4dfabe33996c718ba021882f8f5ee923abbdf9
+f
+6SistemaInventarioPPR/src/controlador/Ctrl_Cliente.java,1\7\1717ac7c17be50da5d638a4e00286c10a13d9d55
+X
+(SistemaInventarioPPR/src/view/Login.java,5\d\5df06cb872d70bb0091cab971991ab0a55a8c929
+q
+ASistemaInventarioPPR/src/view/InternalFrame_GestionarCliente.java,e\1\e1a8b778fcf6309e6a25c8687483f8bde3319ddd
+_
+/SistemaInventarioPPR/src/conexion/Conexion.java,6\a\6acc2817c7e6ed45560d558e83b40eabba9104c4

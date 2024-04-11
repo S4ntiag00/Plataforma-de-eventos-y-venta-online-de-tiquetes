@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Sistema_Inventario">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/SistemaInventarioPPR/dist/Sistema_Inventario.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

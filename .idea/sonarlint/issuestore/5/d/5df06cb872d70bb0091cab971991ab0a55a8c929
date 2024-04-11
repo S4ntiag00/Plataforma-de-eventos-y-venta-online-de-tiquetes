@@ -1,0 +1,39 @@
+
+>
+java:S16044"(Make this anonymous inner class a lambda(çŒÇö
+>
+java:S1604>"(Make this anonymous inner class a lambda(õú¨ì
+c
+java:S1223§"LRename this method to prevent any misunderstanding or make it a constructor.(ÀğŠÕ
+r	java:S116"WRename this field "boton_accder" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€Ö¬…ıÿÿÿÿ
+n	java:S116"XRename this field "boton_accder1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õ‘¹
+u	java:S116£"ZRename this field "txt_contraseÃ±a" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Î©Î•ûÿÿÿÿ
+q	java:S116¤"VRename this field "txt_usuario" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—Ÿé¬ûÿÿÿÿ
+w
+java:S1450"[Remove the "boton_accder" field and declare it as a local variable in the relevant methods.(€Ö¬…ıÿÿÿÿ
+s
+java:S1450"\Remove the "boton_accder1" field and declare it as a local variable in the relevant methods.(õ‘¹
+r
+java:S1450Ÿ"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+r
+java:S1450 "VRemove the "jLabel2" field and declare it as a local variable in the relevant methods.(™úòˆüÿÿÿÿ
+r
+java:S1450¡"VRemove the "jLabel3" field and declare it as a local variable in the relevant methods.(Îä€øÿÿÿÿ
+r
+java:S1450¢"VRemove the "jPanel1" field and declare it as a local variable in the relevant methods.(´œ½ÿÿÿÿÿ
+c	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©ŠÂÜ
+@
+java:S1172r"*Remove this unused method parameter "evt".(©ŠÂÜ
+c	java:S100v"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ‹è“
+@
+java:S1172v"*Remove this unused method parameter "evt".(Ñ‹è“
+E
+java:S1197~"*Move the array designators [] to the type.(¡şÏÖøÿÿÿÿ
+\
+java:S2147"ECombine this catch with the one at line 139, which has the same body.(¨¦Š½
+\
+java:S2147"ECombine this catch with the one at line 141, which has the same body.(ã€ 
+[
+java:S2147‘"ECombine this catch with the one at line 143, which has the same body.(ñÎ¯%
+d	java:S100§"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀğŠÕ
+R	java:S125®"<This block of commented-out lines of code should be removed.(·á£Ú
