@@ -1,2 +1,6 @@
-package controlador;public class Ctrl_Pago {
+package controlador;
+import conexion.Conexion;
+import java.sql.*;
+import modelo.Pago;
+public class Ctrl_Pago {
 }

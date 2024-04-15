@@ -1,2 +1,6 @@
-package controlador;public class Ctrl_Organizador {
+package controlador;
+import conexion.Conexion;
+import java.sql.*;
+import modelo.Organizador;
+public class Ctrl_Organizador {
 }

@@ -8,7 +8,7 @@ import modelo.Cliente;
 public class Ctrl_Cliente {
 
     
-    public boolean guardar(Cliente objeto) {
+    public boolean guardarCliente(Cliente objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
