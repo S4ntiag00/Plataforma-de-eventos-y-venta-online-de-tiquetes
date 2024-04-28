@@ -4,6 +4,7 @@
  */
 package vista;
 
+import java.awt.datatransfer.FlavorListener;
 import javax.swing.JDesktopPane;
 
 /**
@@ -39,14 +40,14 @@ public class view_Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_usuario = new javax.swing.JMenu();
-        menuItem_nuevo_Usuario = new javax.swing.JMenuItem();
-        menuItem_Gestionar_Usuarios = new javax.swing.JMenuItem();
+        nuevo_admin = new javax.swing.JMenuItem();
+        gestionar_admin = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        nuevo_usuario = new javax.swing.JMenuItem();
+        gestionar_usuarios = new javax.swing.JMenuItem();
         menu_factura = new javax.swing.JMenu();
-        jMenuItem_nueva_venta = new javax.swing.JMenuItem();
-        jMenuItem_gestionar_venta = new javax.swing.JMenuItem();
+        nueva_factura = new javax.swing.JMenuItem();
+        gestionar_facturas = new javax.swing.JMenuItem();
         menu_cerrarSesion = new javax.swing.JMenu();
         menuItem_cerrar_sesion = new javax.swing.JMenuItem();
 
@@ -74,50 +75,50 @@ public class view_Menu extends javax.swing.JFrame {
         menu_usuario.setMinimumSize(new java.awt.Dimension(130, 50));
         menu_usuario.setPreferredSize(new java.awt.Dimension(150, 50));
 
-        menuItem_nuevo_Usuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        menuItem_nuevo_Usuario.setText("Nuevo Usuario");
-        menuItem_nuevo_Usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuItem_nuevo_Usuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        menuItem_nuevo_Usuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuItem_nuevo_Usuario.addActionListener(new java.awt.event.ActionListener() {
+        nuevo_admin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        nuevo_admin.setText("Nuevo Admin");
+        nuevo_admin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nuevo_admin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nuevo_admin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nuevo_admin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem_nuevo_UsuarioActionPerformed(evt);
+                nuevo_adminActionPerformed(evt);
             }
         });
-        menu_usuario.add(menuItem_nuevo_Usuario);
+        menu_usuario.add(nuevo_admin);
 
-        menuItem_Gestionar_Usuarios.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        menuItem_Gestionar_Usuarios.setText("Gestionar Usuarios");
-        menuItem_Gestionar_Usuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuItem_Gestionar_Usuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        menuItem_Gestionar_Usuarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuItem_Gestionar_Usuarios.addActionListener(new java.awt.event.ActionListener() {
+        gestionar_admin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        gestionar_admin.setText("Gestionar Admin's");
+        gestionar_admin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gestionar_admin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        gestionar_admin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gestionar_admin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItem_Gestionar_UsuariosActionPerformed(evt);
+                gestionar_adminActionPerformed(evt);
             }
         });
-        menu_usuario.add(menuItem_Gestionar_Usuarios);
+        menu_usuario.add(gestionar_admin);
 
         jMenuBar1.add(menu_usuario);
 
         jMenu5.setText("Usuarios");
         jMenu5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        jMenuItem7.setText("Nuevo Empleado");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        nuevo_usuario.setText("Nuevo Usuario");
+        nuevo_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                nuevo_usuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem7);
+        jMenu5.add(nuevo_usuario);
 
-        jMenuItem8.setText("Gestionar Empleado");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        gestionar_usuarios.setText("Gestionar Usuarios");
+        gestionar_usuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                gestionar_usuariosActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem8);
+        jMenu5.add(gestionar_usuarios);
 
         jMenuBar1.add(jMenu5);
 
@@ -130,23 +131,28 @@ public class view_Menu extends javax.swing.JFrame {
         menu_factura.setMaximumSize(new java.awt.Dimension(120, 32767));
         menu_factura.setPreferredSize(new java.awt.Dimension(150, 40));
 
-        jMenuItem_nueva_venta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jMenuItem_nueva_venta.setText("Nueva Venta");
-        jMenuItem_nueva_venta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuItem_nueva_venta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menu_factura.add(jMenuItem_nueva_venta);
-
-        jMenuItem_gestionar_venta.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jMenuItem_gestionar_venta.setText("Gestionar Venta");
-        jMenuItem_gestionar_venta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem_gestionar_venta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuItem_gestionar_venta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenuItem_gestionar_venta.addActionListener(new java.awt.event.ActionListener() {
+        nueva_factura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        nueva_factura.setText("Nueva Factura");
+        nueva_factura.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nueva_factura.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        nueva_factura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_gestionar_ventaActionPerformed(evt);
+                nueva_facturaActionPerformed(evt);
             }
         });
-        menu_factura.add(jMenuItem_gestionar_venta);
+        menu_factura.add(nueva_factura);
+
+        gestionar_facturas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        gestionar_facturas.setText("Gestionar Facturas");
+        gestionar_facturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gestionar_facturas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        gestionar_facturas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gestionar_facturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gestionar_facturasActionPerformed(evt);
+            }
+        });
+        menu_factura.add(gestionar_facturas);
 
         jMenuBar1.add(menu_factura);
 
@@ -176,60 +182,81 @@ public class view_Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuItem_Gestionar_UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_Gestionar_UsuariosActionPerformed
-        InternalFrame_GestionarUsuarios ventanagestionusuarios = new InternalFrame_GestionarUsuarios();
-        jDesktopPane_menu.add(ventanagestionusuarios);
-        ventanagestionusuarios.setVisible(true);
-
-    }//GEN-LAST:event_menuItem_Gestionar_UsuariosActionPerformed
-
-    private void jMenuItem_gestionar_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_gestionar_ventaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_gestionar_ventaActionPerformed
-
-    private void menuItem_nuevo_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_nuevo_UsuarioActionPerformed
-        InternalFrame_NuevoUsuario ventananuevousuario = new InternalFrame_NuevoUsuario();
-        jDesktopPane_menu.add(ventananuevousuario);
-        ventananuevousuario.setVisible(true);
-    }//GEN-LAST:event_menuItem_nuevo_UsuarioActionPerformed
-
     private void menuItem_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_cerrar_sesionActionPerformed
-        Login ventananuevalinea = new Login();
-        ventananuevalinea.setVisible(true);
+        //Login ventananuevalinea = new Login();
+        //ventananuevalinea.setVisible(true);
         dispose();
 
     }//GEN-LAST:event_menuItem_cerrar_sesionActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        InternalFrame_NuevoEmpleado ventananuevalinea = new InternalFrame_NuevoEmpleado();
-        jDesktopPane_menu.add(ventananuevalinea);
-        ventananuevalinea.setVisible(true);
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    private void gestionar_facturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionar_facturasActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Facturas
+        Gestiorar_Factura gestioanrFactura= new Gestiorar_Factura();
+        gestioanrFactura.setVisible(false);
+        gestioanrFactura.setResizable(false);
+        gestioanrFactura.setLocation(null);
+    }//GEN-LAST:event_gestionar_facturasActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        InternalFrame_GestionarEmpleado ventananuevalinea = new InternalFrame_GestionarEmpleado();
-        jDesktopPane_menu.add(ventananuevalinea);
-        ventananuevalinea.setVisible(true);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    private void gestionar_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionar_usuariosActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Usuarios
+        Gestionar_Usuarios gestionar_Usuarios = new Gestionar_Usuarios();
+        gestionar_Usuarios.setVisible(true);
+        gestionar_Usuarios.setResizable(false);
+        gestionar_Usuarios.setLocation(null);
+    }//GEN-LAST:event_gestionar_usuariosActionPerformed
+
+    private void nuevo_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo_usuarioActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Nuevo_Usuario
+        Nuevo_Usuario nuevo_Usuario= new Nuevo_Usuario();
+        nuevo_Usuario.setVisible(true);
+        nuevo_Usuario.setResizable(false);
+        nuevo_Usuario.setLocation(null);
+                
+    }//GEN-LAST:event_nuevo_usuarioActionPerformed
+
+    private void gestionar_adminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionar_adminActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Admins
+        Gestionar_Admins gestionar_Admins = new Gestionar_Admins();
+        gestionar_Admins.setVisible(true);
+        gestionar_Admins.setResizable(false);
+        gestionar_Admins.setLocation(null);
+    }//GEN-LAST:event_gestionar_adminActionPerformed
+
+    private void nuevo_adminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo_adminActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Nuevo_Admin
+        Nuevo_Admin nuevo_Admin = new Nuevo_Admin();
+        nuevo_Admin.setVisible(true);
+        nuevo_Admin.setResizable(false);
+        nuevo_Admin.setLocation(null);
+    }//GEN-LAST:event_nuevo_adminActionPerformed
+
+    private void nueva_facturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_facturaActionPerformed
+        //Ajustar datos de la ventana -> Gestionar Nueva_Factura
+        Nueva_Factura nueva_Factura= new Nueva_Factura();
+        nueva_Factura.setVisible(true);
+        nueva_Factura.setResizable(false);
+        nueva_Factura.setLocation(null);
+        
+    }//GEN-LAST:event_nueva_facturaActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem gestionar_admin;
+    private javax.swing.JMenuItem gestionar_facturas;
+    private javax.swing.JMenuItem gestionar_usuarios;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem_gestionar_venta;
-    private javax.swing.JMenuItem jMenuItem_nueva_venta;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenuItem menuItem_Gestionar_Usuarios;
     private javax.swing.JMenuItem menuItem_cerrar_sesion;
-    private javax.swing.JMenuItem menuItem_nuevo_Usuario;
     private javax.swing.JMenu menu_cerrarSesion;
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_usuario;
+    private javax.swing.JMenuItem nueva_factura;
+    private javax.swing.JMenuItem nuevo_admin;
+    private javax.swing.JMenuItem nuevo_usuario;
     // End of variables declaration//GEN-END:variables
 }

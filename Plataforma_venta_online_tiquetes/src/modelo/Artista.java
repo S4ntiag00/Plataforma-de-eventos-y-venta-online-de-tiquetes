@@ -1,22 +1,26 @@
+
 package modelo;
 
+/**
+ *
+ * @author ediso
+ */
 public class Artista {
-    // Atributos de la clase Artista -> Tabla Artista en la base de datos
 
-    int idArtista;
-    String nombreArtista;
-    String espeliadad;
+    //Atributos
+    private int idArtista;
+    private String nombreArtista;
+    private String especialidad;
 
-    //contructor vacio  ->
     public Artista() {
     }
-    //contructor con todos los atributos  -> de la CLase Artista
-    public Artista(int idArtista, String nombreArtista, String espeliadad) {
+
+    public Artista(int idArtista, String nombreArtista, String especialidad) {
         this.idArtista = idArtista;
         this.nombreArtista = nombreArtista;
-        this.espeliadad = espeliadad;
+        this.especialidad = especialidad;
     }
-    //Getters y Setters de los atributos de la clase ->
+
     public int getIdArtista() {
         return idArtista;
     }
@@ -33,11 +37,14 @@ public class Artista {
         this.nombreArtista = nombreArtista;
     }
 
-    public String getEspeliadad() {
-        return espeliadad;
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public void setEspeliadad(String espeliadad) {
-        this.espeliadad = espeliadad;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
+    
+    
+
 }

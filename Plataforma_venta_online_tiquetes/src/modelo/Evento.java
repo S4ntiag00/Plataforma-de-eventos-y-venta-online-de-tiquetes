@@ -1,36 +1,40 @@
 package modelo;
 
+/**
+ *
+ * @author ediso
+ */
 public class Evento {
 
-    // Atributos de la clase Evento -> Tabla Evento en la base de datos
-    int idEvento;
-    int idCategoriia;
-    int idLocalizacion;
-    int idArtista;
-    int  organizador;
-    String nombreEvento;
-    String descripcionEvento;
-    String fecha;
-    String hora;
-    double precio_tiquete;
+    //Atributos
+    private int idEvento;
+    private String nombreEvento;
+    private String descripcionEvento;
+    private String fecha;
+    private String hora;
+    private float PrecioTiquete;
+    private int idLocacion;
+    private int idCategoria;
+    private int idArtista;
+    private int idOrganizador;
+    private String poster;
 
-    //contructor vacio  ->
     public Evento() {
     }
-    //contructor con todos los atributos  -> de la CLase Evento
-    public Evento(int idEvento, int idCategoriia, int idLocalizacion, int idArtista, String nombreEvento, int organizador, String descripcionEvento, String fecha, String hora, double precio_tiquete) {
+
+    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, float PrecioTiquete, int idLocacion, int idCategoria, int idArtista, int idOrganizador, String poster) {
         this.idEvento = idEvento;
-        this.idCategoriia = idCategoriia;
-        this.idLocalizacion = idLocalizacion;
-        this.idArtista = idArtista;
         this.nombreEvento = nombreEvento;
-        this.organizador = organizador;
         this.descripcionEvento = descripcionEvento;
         this.fecha = fecha;
         this.hora = hora;
-        this.precio_tiquete = precio_tiquete;
+        this.PrecioTiquete = PrecioTiquete;
+        this.idLocacion = idLocacion;
+        this.idCategoria = idCategoria;
+        this.idArtista = idArtista;
+        this.idOrganizador = idOrganizador;
+        this.poster = poster;
     }
-    //Getters y Setters de los atributos de la clase ->
 
     public int getIdEvento() {
         return idEvento;
@@ -38,38 +42,6 @@ public class Evento {
 
     public void setIdEvento(int idEvento) {
         this.idEvento = idEvento;
-    }
-
-    public int getIdCategoriia() {
-        return idCategoriia;
-    }
-
-    public void setIdCategoriia(int idCategoriia) {
-        this.idCategoriia = idCategoriia;
-    }
-
-    public int getIdLocalizacion() {
-        return idLocalizacion;
-    }
-
-    public void setIdLocalizacion(int idLocalizacion) {
-        this.idLocalizacion = idLocalizacion;
-    }
-
-    public int getIdArtista() {
-        return idArtista;
-    }
-
-    public void setIdArtista(int idArtista) {
-        this.idArtista = idArtista;
-    }
-
-    public int getOrganizador() {
-        return organizador;
-    }
-
-    public void setOrganizador(int organizador) {
-        this.organizador = organizador;
     }
 
     public String getNombreEvento() {
@@ -104,11 +76,55 @@ public class Evento {
         this.hora = hora;
     }
 
-    public double getPrecio_tiquete() {
-        return precio_tiquete;
+    public float getPrecioTiquete() {
+        return PrecioTiquete;
     }
 
-    public void setPrecio_tiquete(double precio_tiquete) {
-        this.precio_tiquete = precio_tiquete;
+    public void setPrecioTiquete(float PrecioTiquete) {
+        this.PrecioTiquete = PrecioTiquete;
     }
+
+    public int getIdLocacion() {
+        return idLocacion;
+    }
+
+    public void setIdLocacion(int idLocacion) {
+        this.idLocacion = idLocacion;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public int getIdArtista() {
+        return idArtista;
+    }
+
+    public void setIdArtista(int idArtista) {
+        this.idArtista = idArtista;
+    }
+
+    public int getIdOrganizador() {
+        return idOrganizador;
+    }
+
+    public void setIdOrganizador(int idOrganizador) {
+        this.idOrganizador = idOrganizador;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+        
+   
+
 }

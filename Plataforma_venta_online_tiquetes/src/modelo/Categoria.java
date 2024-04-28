@@ -1,21 +1,24 @@
+
 package modelo;
 
+/**
+ *
+ * @author ediso
+ */
 public class Categoria {
-    // Atributos de la clase Categoria -> tabla categorías
-    int idCategoria;
-    String nombreCategoria;
 
-    // Constructor vacío ->
+    //Atributos
+    private int idCategoria;
+    private String nombreCategoria;
+
     public Categoria() {
     }
 
-    // Constructor con loa atributos de la clase ->
     public Categoria(int idCategoria, String nombreCategoria) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
     }
 
-    //Getters y Setters  de la clase ->
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -31,4 +34,6 @@ public class Categoria {
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
+
+
 }

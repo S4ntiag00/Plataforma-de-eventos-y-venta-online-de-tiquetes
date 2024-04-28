@@ -124,6 +124,12 @@ public class InternalFrame_GestionarEmpleado extends javax.swing.JInternalFrame 
         label_apellidoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         label_apellidoCliente.setText("Apellido");
 
+        txt_idCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_idClienteActionPerformed(evt);
+            }
+        });
+
         label_documentoIdentidadCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         label_documentoIdentidadCliente.setText("Documento ");
 
@@ -286,6 +292,10 @@ public class InternalFrame_GestionarEmpleado extends javax.swing.JInternalFrame 
     private void txt_IdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_IdUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_IdUsuarioActionPerformed
+
+    private void txt_idClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_idClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
