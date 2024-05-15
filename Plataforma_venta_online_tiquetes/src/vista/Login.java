@@ -155,8 +155,8 @@ public class Login extends javax.swing.JFrame {
                     boolean inicioSesionExitoso = ctrl_Usuario.existeUsuario(usuario);
                     if (inicioSesionExitoso) {
                         this.dispose();
-                        view_Menu viewMenu= new view_Menu();
-                        viewMenu.setVisible(true);
+                        CrearEventos eventos= new CrearEventos();
+                        eventos.setVisible(true);
                         // Inicio de sesión exitoso
                     } else {
                         // Contraseña incorrecta

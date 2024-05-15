@@ -17,16 +17,17 @@ public class Ctrl_Evento {
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT INTO Eventos (Nombre_Evento, Descripción_Evento, Fecha, Hora, Precio_Tiquete, ID_Categoria, ID_Locacion, ID_Artista, ID_Organizador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT INTO Eventos (Nombre_Evento, Descripción_Evento, Fecha, Hora, Poster, Precio_Tiquete, ID_Categoria, ID_Locacion, ID_Artista, ID_Organizador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             consulta.setString(1, evento.getNombreEvento());
             consulta.setString(2, evento.getDescripcionEvento());
             consulta.setString(3, evento.getFecha());
             consulta.setString(4, evento.getHora());
-            consulta.setFloat(5, evento.getPrecioTiquete());
-            consulta.setInt(6, evento.getIdCategoria());
-            consulta.setInt(7, evento.getIdLocacion());
-            consulta.setInt(8, evento.getIdArtista());
-            consulta.setInt(9, evento.getIdOrganizador());
+            consulta.setBinaryStream(5, evento.getPoster(), evento.getLongitudFoto());
+            consulta.setFloat(6, evento.getPrecioTiquete()); 
+            consulta.setInt(7, evento.getIdCategoria());
+            consulta.setInt(8, evento.getIdLocacion());
+            consulta.setInt(9, evento.getIdArtista());
+            consulta.setInt(10, evento.getIdOrganizador());
 
             respuesta = consulta.executeUpdate() > 0;
 

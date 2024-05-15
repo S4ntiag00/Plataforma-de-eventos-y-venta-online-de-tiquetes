@@ -1,5 +1,7 @@
 package modelo;
 
+import java.io.FileInputStream;
+
 /**
  *
  * @author ediso
@@ -7,22 +9,23 @@ package modelo;
 public class Evento {
 
     //Atributos
-    private int idEvento;
-    private String nombreEvento;
-    private String descripcionEvento;
-    private String fecha;
-    private String hora;
-    private float PrecioTiquete;
-    private int idLocacion;
-    private int idCategoria;
-    private int idArtista;
-    private int idOrganizador;
-    private String poster;
+    int idEvento;
+    String nombreEvento;
+    String descripcionEvento;
+    String fecha;
+    String hora;
+    float PrecioTiquete;
+    int idLocacion;
+    int idCategoria;
+    int idArtista;
+    int idOrganizador;
+    FileInputStream poster;
+    int LongitudFoto;
 
     public Evento() {
     }
 
-    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, float PrecioTiquete, int idLocacion, int idCategoria, int idArtista, int idOrganizador, String poster) {
+    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, float PrecioTiquete, int idLocacion, int idCategoria, int idArtista, int idOrganizador, FileInputStream poster, int LongitudFoto) {
         this.idEvento = idEvento;
         this.nombreEvento = nombreEvento;
         this.descripcionEvento = descripcionEvento;
@@ -34,6 +37,7 @@ public class Evento {
         this.idArtista = idArtista;
         this.idOrganizador = idOrganizador;
         this.poster = poster;
+        this.LongitudFoto = LongitudFoto;
     }
 
     public int getIdEvento() {
@@ -116,15 +120,21 @@ public class Evento {
         this.idOrganizador = idOrganizador;
     }
 
-    public String getPoster() {
+    public FileInputStream getPoster() {
         return poster;
     }
 
-    public void setPoster(String poster) {
+    public void setPoster(FileInputStream poster) {
         this.poster = poster;
     }
 
-        
-   
+    public int getLongitudFoto() {
+        return LongitudFoto;
+    }
 
+    public void setLongitudFoto(int LongitudFoto) {
+        this.LongitudFoto = LongitudFoto;
+    }
+    
+    
 }

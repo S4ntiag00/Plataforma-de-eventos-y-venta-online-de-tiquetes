@@ -253,8 +253,8 @@ public class Registar_Usuario extends javax.swing.JFrame {
                 // Si todas las validaciones pasan, los campos son válidos
                 System.out.println("Todos los campos son válidos.");
                 //toUpperCase() pone la primer letra en mayúscula-> 
-                String nombre=txt_nombre.getText().toUpperCase();
-                String apellido= txt_apellido.getText().toUpperCase();
+                String nombre=txt_nombre.getText();
+                String apellido= txt_apellido.getText();
                 String email=txt_email.getText();
                 String telefono= txt_telefono.getText();
                 String contrasena=txt_contrasena.getText();
@@ -263,6 +263,11 @@ public class Registar_Usuario extends javax.swing.JFrame {
                 Usuario usuario = new Usuario(nombre, apellido, email, contrasena, telefono, telefono);
                 Ctrl_Usuario ctrl_Usuario= new Ctrl_Usuario();
                 ctrl_Usuario.guardarUsuario(usuario);
+                this.dispose();// cerrar la ventana Registrar_Usuario
+                LimpiarCampos();// limpia los campos de la ventana Registrar_Usuario
+                Login login= new Login();// instacia de la ventana login 
+                login.setVisible(true);// muestra la ventana login
+                login.setLocationRelativeTo(null);
             }
             
         } catch (Exception e) {

@@ -1,14 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 import controlador.Ctrl_Artista;
-import controlador.Ctrl_Categoria;
 import controlador.Ctrl_Evento;
 import controlador.Ctrl_Locacion;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Artista;
 import modelo.Evento;
 import modelo.Locacion;
@@ -22,6 +28,9 @@ public class CrearEventos extends javax.swing.JFrame {
     /**
      * Creates new form CrearEventos
      */
+    private FileInputStream fis;
+    private int longitudFoto;
+
     public CrearEventos() {
         initComponents();
     }
@@ -40,7 +49,7 @@ public class CrearEventos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        labelPoster = new javax.swing.JLabel();
         txt_nombreEvento = new javax.swing.JTextField();
         txt_hora = new javax.swing.JFormattedTextField();
         txt_fecha = new javax.swing.JFormattedTextField();
@@ -65,6 +74,11 @@ public class CrearEventos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("BOLETERIA");
@@ -73,17 +87,15 @@ public class CrearEventos extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel5.setText("                                                                  Imagen");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+            .addComponent(labelPoster, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(labelPoster, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         txt_nombreEvento.setText("Nombre Evento");
@@ -159,6 +171,11 @@ public class CrearEventos extends javax.swing.JFrame {
         });
 
         jButton2.setText("SUBIR POSTER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("CREAR EVENTO");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -279,12 +296,12 @@ public class CrearEventos extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_nombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,9 +386,8 @@ public class CrearEventos extends javax.swing.JFrame {
         Ctrl_Evento controlEvento = new Ctrl_Evento();
         Ctrl_Locacion controlLocacion = new Ctrl_Locacion();
         Ctrl_Artista controlArtista = new Ctrl_Artista();
-        Ctrl_Categoria controlCategoria = new Ctrl_Categoria();
 
-// Verificar que los campos no estén vacíos
+        // Verificar que los campos no estén vacíos
         if (txt_nombreEvento.getText().isEmpty() || txt_descripcionEvento.getText().isEmpty()
                 || txt_fecha.getText().isEmpty() || txt_hora.getText().isEmpty()
                 || txt_precio.getText().isEmpty() || txt_idCategoria.getText().isEmpty()
@@ -407,7 +423,7 @@ public class CrearEventos extends javax.swing.JFrame {
                     }
 
                     if (idArtista != -1) {
-                        // Crear un nuevo evento con la localidad y artista obtenidos
+                        // Crear un nuevo evento con la localidad, artista y la imagen obtenidos
                         nuevoEvento.setNombreEvento(txt_nombreEvento.getText().trim());
                         nuevoEvento.setDescripcionEvento(txt_descripcionEvento.getText().trim());
                         nuevoEvento.setFecha(txt_fecha.getText().trim());
@@ -417,6 +433,8 @@ public class CrearEventos extends javax.swing.JFrame {
                         nuevoEvento.setIdOrganizador(Integer.parseInt(txt_idOrganizador.getText().trim()));
                         nuevoEvento.setIdLocacion(idLocacion);
                         nuevoEvento.setIdArtista(idArtista);
+                        nuevoEvento.setPoster(fis); // Establecer la imagen seleccionada
+                        nuevoEvento.setLongitudFoto(longitudFoto); // Establecer la longitud de la imagen
 
                         // Guardar el evento
                         if (controlEvento.guardarEvento(nuevoEvento)) {
@@ -436,7 +454,7 @@ public class CrearEventos extends javax.swing.JFrame {
             }
         }
 
-// Limpiar campos después de guardar
+        // Limpiar campos después de guardar
         txt_nombreEvento.setText("");
         txt_descripcionEvento.setText("");
         txt_fecha.setText("");
@@ -459,6 +477,38 @@ public class CrearEventos extends javax.swing.JFrame {
     private void txt_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_precioActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+
+        // Filtrar solo archivos de imagen (jpg y png)
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de imagen", "jpg", "png");
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                Image img = ImageIO.read(file);
+                // Reescalar la imagen para que se ajuste al tamaño del JLabel
+                Image scaledImg = img.getScaledInstance(labelPoster.getWidth(), labelPoster.getHeight(), Image.SCALE_SMOOTH);
+                labelPoster.setIcon(new ImageIcon(scaledImg));
+
+                // Almacenar la imagen seleccionada y su longitud
+                fis = new FileInputStream(file);
+                longitudFoto = (int) file.length();
+
+            } catch (IOException ex) {
+                System.out.println("Error al cargar la imagen: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        Menu_Principal menu_Principal = new Menu_Principal();
+        menu_Principal.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -497,19 +547,19 @@ public class CrearEventos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel labelPoster;
     private javax.swing.JTextField txt_capacidad;
     private javax.swing.JTextField txt_descripcionEvento;
     private javax.swing.JTextField txt_direccion;
