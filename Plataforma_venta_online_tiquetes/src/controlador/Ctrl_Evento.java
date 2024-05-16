@@ -22,7 +22,7 @@ public class Ctrl_Evento {
             consulta.setString(2, evento.getDescripcionEvento());
             consulta.setString(3, evento.getFecha());
             consulta.setString(4, evento.getHora());
-            consulta.setBinaryStream(5, evento.getPoster(), evento.getLongitudFoto());
+            consulta.setBytes(5, evento.getPoster());
             consulta.setFloat(6, evento.getPrecioTiquete()); 
             consulta.setInt(7, evento.getIdCategoria());
             consulta.setInt(8, evento.getIdLocacion());

@@ -7,31 +7,23 @@ package vista;
 import conexion.Conexion;
 import controlador.Ctrl_Artista;
 import controlador.Ctrl_Locacion;
-import java.awt.BorderLayout;
+import controlador.RenderTabla;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 import modelo.Artista;
 import modelo.Evento;
 import modelo.Locacion;
@@ -137,7 +129,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         jLabel7F.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jLabel7F.setText("FECHA:");
 
-        botonComprarSlider.setText("COMPRAR");
+        botonComprarSlider.setText("Ver Detalles");
         botonComprarSlider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonComprarSliderActionPerformed(evt);
@@ -272,116 +264,116 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Titulo", "Descripcion", "Poster"
+                "", "", "", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+                java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -395,6 +387,11 @@ public class Menu_Principal extends javax.swing.JFrame {
         tabla.setSelectionBackground(new java.awt.Color(255, 255, 255));
         tabla.setShowGrid(false);
         tabla.setVerifyInputWhenFocusTarget(false);
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabla);
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -527,7 +524,17 @@ public class Menu_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSiguienteActionPerformed
 
     private void botonComprarSliderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarSliderActionPerformed
-        // TODO add your handling code here:
+        String descripcionevento = labelDescripcion.getText();
+
+        // Consultar la base de datos para obtener los detalles del evento seleccionado
+        Evento eventoSeleccionado = obtenerEventoPorDescripcion(descripcionevento);
+
+        // Mostrar los detalles del evento en la nueva ventana
+        if (eventoSeleccionado != null) {
+            mostrarDetallesEvento(eventoSeleccionado);
+        }
+        this.dispose();
+
     }//GEN-LAST:event_botonComprarSliderActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -535,6 +542,92 @@ public class Menu_Principal extends javax.swing.JFrame {
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int row = tabla.getSelectedRow();
+        if (row != -1) {
+
+            // Consultar la base de datos para obtener los detalles del evento seleccionado
+            Evento eventoSeleccionado = obtenerEventoPorFila(row);
+
+            // Mostrar los detalles del evento en la nueva ventana
+            if (eventoSeleccionado != null) {
+                mostrarDetallesEvento(eventoSeleccionado);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private Evento obtenerEventoPorFila(int fila) {
+        Evento evento = null;
+        Connection conexion = Conexion.conectar();
+        String consulta = "SELECT * FROM eventos OFFSET ? LIMIT 1";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setInt(1, fila);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                evento = new Evento();
+                evento.setIdEvento(rs.getInt("id_evento"));
+                evento.setNombreEvento(rs.getString("nombre_evento"));
+                evento.setDescripcionEvento(rs.getString("descripción_evento"));
+                evento.setFecha(rs.getString("fecha"));
+                evento.setHora(rs.getString("hora"));
+                // Obtener el póster como un array de bytes y establecerlo directamente
+                byte[] bytePoster = rs.getBytes("poster");
+                evento.setPoster(bytePoster);
+                evento.setIdArtista(rs.getInt("id_artista"));
+                evento.setIdLocacion(rs.getInt("id_locacion"));
+                // Continuar con el resto de los campos del evento según sea necesario
+            }
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
+        }
+        return evento;
+    }
+
+    private Evento obtenerEventoPorDescripcion(String descripcion) {
+        Evento evento = null;
+        Connection conexion = Conexion.conectar();
+        String consulta = "SELECT * FROM eventos WHERE descripción_evento = ? LIMIT 1";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, descripcion);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                evento = new Evento();
+                evento.setIdEvento(rs.getInt("id_evento"));
+                evento.setNombreEvento(rs.getString("nombre_evento"));
+                evento.setDescripcionEvento(rs.getString("descripción_evento"));
+                evento.setFecha(rs.getString("fecha"));
+                evento.setHora(rs.getString("hora"));
+                // Obtener el póster como un array de bytes y establecerlo directamente
+                byte[] bytePoster = rs.getBytes("poster");
+                evento.setPoster(bytePoster);
+                evento.setIdArtista(rs.getInt("id_artista"));
+                evento.setIdLocacion(rs.getInt("id_locacion"));
+                // Continuar con el resto de los campos del evento según sea necesario
+            }
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
+        }
+        return evento;
+    }
+
+    private void mostrarDetallesEvento(Evento evento) {
+        if (evento != null) {
+            Detalles_Evento detallesEvento = new Detalles_Evento();
+            detallesEvento.setNombreEvento(evento.getNombreEvento());
+            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
+            detallesEvento.setPoster(evento.getPoster());
+            detallesEvento.setHora(evento.getHora());
+            detallesEvento.setFecha(evento.getFecha());
+            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
+            detallesEvento.setVisible(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -712,10 +805,12 @@ public class Menu_Principal extends javax.swing.JFrame {
     }
 
     private void initTabla() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel(); 
+        DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setRowCount(0);
+        tabla.setDefaultRenderer(Object.class, new RenderTabla());
 
-        
+        JButton bt1 = new JButton("Ver Detalles");
+
         Connection cn = Conexion.conectar();
         try {
             PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripción_evento, poster FROM eventos");
@@ -724,7 +819,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 String nombreEvento = rs.getString("nombre_evento");
                 String descripcionEvento = rs.getString("descripción_evento");
                 byte[] poster = rs.getBytes("poster");
-                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster});
+                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster, bt1});
             }
             cn.close();
         } catch (SQLException ex) {

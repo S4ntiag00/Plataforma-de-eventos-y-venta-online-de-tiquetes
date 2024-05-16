@@ -1,6 +1,6 @@
 package modelo;
 
-import java.io.FileInputStream;
+
 
 /**
  *
@@ -19,13 +19,13 @@ public class Evento {
     int idCategoria;
     int idArtista;
     int idOrganizador;
-    FileInputStream poster;
+    byte[] poster;
     int LongitudFoto;
 
     public Evento() {
     }
 
-    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, float PrecioTiquete, int idLocacion, int idCategoria, int idArtista, int idOrganizador, FileInputStream poster, int LongitudFoto) {
+    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, float PrecioTiquete, int idLocacion, int idCategoria, int idArtista, int idOrganizador, byte[] poster, int LongitudFoto) {
         this.idEvento = idEvento;
         this.nombreEvento = nombreEvento;
         this.descripcionEvento = descripcionEvento;
@@ -120,11 +120,11 @@ public class Evento {
         this.idOrganizador = idOrganizador;
     }
 
-    public FileInputStream getPoster() {
+    public byte[] getPoster() {
         return poster;
     }
 
-    public void setPoster(FileInputStream poster) {
+    public void setPoster(byte[] poster) {
         this.poster = poster;
     }
 
