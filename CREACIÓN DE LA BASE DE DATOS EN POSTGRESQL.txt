@@ -1,0 +1,92 @@
+
+
+-- Creación de la tabla Usuarios
+CREATE TABLE Usuarios (
+    ID_Usuario SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Email VARCHAR(100),
+    Contraseña VARCHAR(100),
+    Teléfono VARCHAR(20),
+    Tipo_Usuario VARCHAR(20)
+);
+
+
+-- Creación de la tabla Artistas
+CREATE TABLE Artistas (
+    ID_Artista SERIAL PRIMARY KEY,
+    Nombre_Artista VARCHAR(100),
+    Especialidad VARCHAR(100)
+);
+
+
+
+
+-- Creación de la tabla Locaciones
+CREATE TABLE Locaciones (
+    ID_Locacion SERIAL PRIMARY KEY,
+    Nombre_Locacion VARCHAR(100),
+    Capacidad INTEGER,
+    Dirección TEXT
+);
+
+
+
+
+-- Creación de la tabla Categorías
+CREATE TABLE Categorías (
+    ID_Categoria SERIAL PRIMARY KEY,
+    Nombre_Categoria VARCHAR(100)
+);
+
+
+-- Creación de la tabla Organizadores
+CREATE TABLE Organizadores (
+    ID_Organizador SERIAL PRIMARY KEY,
+    Nombre_Organizador VARCHAR(100),
+    Contacto VARCHAR(100),
+    Usuario_ID INTEGER REFERENCES Usuarios(ID_Usuario)
+);
+
+
+
+
+-- Creación de la tabla Eventos
+CREATE TABLE Eventos (
+    ID_Evento SERIAL PRIMARY KEY,
+    Nombre_Evento VARCHAR(100),
+    Descripción_Evento TEXT,
+    Fecha DATE,
+    Hora TIME,
+    Precio_Tiquete NUMERIC(10, 2),
+    ID_Categoria INTEGER REFERENCES Categorías(ID_Categoria),
+    ID_Locacion INTEGER REFERENCES Locaciones(ID_Locacion),
+    ID_Artista INTEGER REFERENCES Artistas(ID_Artista),
+    ID_Organizador INTEGER REFERENCES Organizadores(ID_Organizador)
+);
+
+
+
+
+-- Creación de la tabla Reserva
+CREATE TABLE Reserva (
+    Reserva_ID SERIAL PRIMARY KEY,
+    Cantidad_tiquetes INTEGER,
+    Estado_Reserva VARCHAR(20),
+    Fecha_Reserva DATE,
+    Hora_Reserva TIME,
+    Evento_ID INTEGER REFERENCES Eventos(ID_Evento),
+    Usuario_ID INTEGER REFERENCES Usuarios(ID_Usuario)
+);
+
+
+-- Creación de la tabla Pagos
+CREATE TABLE Pagos (
+    ID_Pago SERIAL PRIMARY KEY,
+    Metodo_Pago VARCHAR(50),
+    Estado_Pago VARCHAR(20),
+    Monto_Total NUMERIC(10, 2),
+    Fecha_pago DATE,
+    Hora_pago TIME,
+    Reserva_ID INTEGER REFERENCES Reserva(Reserva_ID)
+);
