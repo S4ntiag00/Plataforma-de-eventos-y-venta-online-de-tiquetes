@@ -38,7 +38,7 @@ public class AgregarLocalidadDialog extends javax.swing.JDialog {
         jTextField3 = new javax.swing.JTextField();
         btonAgregarLocalidadDialog = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         txtNombreLocalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
