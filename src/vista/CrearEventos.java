@@ -449,6 +449,7 @@ public class CrearEventos extends javax.swing.JFrame {
 // Crear una instancia del diálogo AgregarLocalidadDialog
         AgregarLocalidadDialog dialog = new AgregarLocalidadDialog(this, true);
         dialog.setVisible(true);
+        dialog.setLocationRelativeTo(null);
 
         // Obtener los datos ingresados por el usuario desde el diálogo
         String nombreLocalidad = dialog.getNombreLocalidad();
