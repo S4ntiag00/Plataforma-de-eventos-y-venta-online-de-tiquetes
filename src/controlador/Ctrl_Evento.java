@@ -13,7 +13,7 @@ public class Ctrl_Evento {
 
     public int guardarEvento(Evento evento) {
         int idEvento = -1;
-        String sql = "INSERT INTO eventos (nombre_evento, descripcion_evento, fecha, hora, dirección, poster, id_categoria, id_artista) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_evento;";
+        String sql = "INSERT INTO eventos (nombre_evento, descripcion_evento, fecha, hora, direccion, poster, id_categoria, id_artista) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_evento;";
 
         try (Connection cn = Conexion.conectar(); PreparedStatement pstmt = cn.prepareStatement(sql)) {
 
@@ -50,7 +50,7 @@ public class Ctrl_Evento {
                 evento.setDescripcionEvento(rs.getString("descripcion_evento"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
-                evento.setDireccion(rs.getString("dirección"));
+                evento.setDireccion(rs.getString("direccion"));
                 evento.setPoster(rs.getBytes("poster"));
                 evento.setIdCategoria(rs.getInt("id_categoria"));
                 evento.setIdArtista(rs.getInt("id_artista"));
@@ -89,7 +89,7 @@ public class Ctrl_Evento {
     // Método para actualizar un evento
     public boolean actualizarEvento(Evento evento) {
         boolean respuesta = false;
-        String sql = "UPDATE Eventos SET nombre_evento = ?, descripcion_evento = ?, fecha = ?, hora = ?, dirección = ?, poster = ?, id_categoria = ?, id_artista = ? WHERE id_evento = ?";
+        String sql = "UPDATE Eventos SET nombre_evento = ?, descripcion_evento = ?, fecha = ?, hora = ?, direccion = ?, poster = ?, id_categoria = ?, id_artista = ? WHERE id_evento = ?";
 
         try (Connection cn = Conexion.conectar(); PreparedStatement consulta = cn.prepareStatement(sql)) {
 
