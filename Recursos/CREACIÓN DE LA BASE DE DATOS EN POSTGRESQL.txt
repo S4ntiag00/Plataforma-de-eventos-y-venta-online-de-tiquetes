@@ -55,7 +55,7 @@ CREATE TABLE Organizadores (
 CREATE TABLE Eventos (
     ID_Evento SERIAL PRIMARY KEY,
     Nombre_Evento VARCHAR(100),
-    Descripción_Evento TEXT,
+    Descripcion_Evento TEXT,
     Fecha DATE,
     Hora TIME,
     Precio_Tiquete NUMERIC(10, 2),

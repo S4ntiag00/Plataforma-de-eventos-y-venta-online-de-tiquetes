@@ -1,4 +1,3 @@
-
 package controlador;
 
 import conexion.Conexion;
@@ -10,16 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.Evento;
 
-
 public class Ctrl_Evento {
 
-public int guardarEvento(Evento evento) {
+    public int guardarEvento(Evento evento) {
         int idEvento = -1;
         String sql = "INSERT INTO eventos (nombre_evento, descripcion_evento, fecha, hora, dirección, poster, id_categoria, id_artista) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_evento;";
-        
-        try (Connection cn = Conexion.conectar(); 
-             PreparedStatement pstmt = cn.prepareStatement(sql)) {
-            
+
+        try (Connection cn = Conexion.conectar(); PreparedStatement pstmt = cn.prepareStatement(sql)) {
+
             pstmt.setString(1, evento.getNombreEvento());
             pstmt.setString(2, evento.getDescripcionEvento());
             pstmt.setString(3, evento.getFecha());
@@ -42,11 +39,9 @@ public int guardarEvento(Evento evento) {
     // Método para obtener todos los eventos
     public List<Evento> obtenerEventos() {
         List<Evento> eventos = new ArrayList<>();
-        Connection cn = Conexion.conectar();
+        String sql = "SELECT * FROM Eventos";
 
-        try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT * FROM Eventos");
-            ResultSet rs = consulta.executeQuery();
+        try (Connection cn = Conexion.conectar(); PreparedStatement consulta = cn.prepareStatement(sql); ResultSet rs = consulta.executeQuery()) {
 
             while (rs.next()) {
                 Evento evento = new Evento();
@@ -55,6 +50,8 @@ public int guardarEvento(Evento evento) {
                 evento.setDescripcionEvento(rs.getString("descripcion_evento"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
+                evento.setDireccion(rs.getString("dirección"));
+                evento.setPoster(rs.getBytes("poster"));
                 evento.setIdCategoria(rs.getInt("id_categoria"));
                 evento.setIdArtista(rs.getInt("id_artista"));
 
@@ -63,28 +60,18 @@ public int guardarEvento(Evento evento) {
         } catch (SQLException e) {
             System.out.println("Error al obtener eventos: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
         return eventos;
     }
 
     // Método para eliminar un evento por su ID
     public boolean eliminarEvento(int idEvento) {
         boolean respuesta = false;
-        Connection cn = Conexion.conectar();
+        String sql = "DELETE FROM Eventos WHERE id_evento = ?";
 
-        try {
-            PreparedStatement consulta = cn.prepareStatement("DELETE FROM Eventos WHERE id_evento = ?");
+        try (Connection cn = Conexion.conectar(); PreparedStatement consulta = cn.prepareStatement(sql)) {
+
             consulta.setInt(1, idEvento);
-
             respuesta = consulta.executeUpdate() > 0;
 
             if (respuesta) {
@@ -95,33 +82,26 @@ public int guardarEvento(Evento evento) {
         } catch (SQLException e) {
             System.out.println("Error al eliminar evento: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
         return respuesta;
     }
 
     // Método para actualizar un evento
     public boolean actualizarEvento(Evento evento) {
         boolean respuesta = false;
-        Connection cn = Conexion.conectar();
+        String sql = "UPDATE Eventos SET nombre_evento = ?, descripcion_evento = ?, fecha = ?, hora = ?, dirección = ?, poster = ?, id_categoria = ?, id_artista = ? WHERE id_evento = ?";
 
-        try {
-            PreparedStatement consulta = cn.prepareStatement("UPDATE Eventos SET nombre_evento = ?, descripcion_evento = ?, fecha = ?, hora = ?, id_categoria = ?, id_artista = ? WHERE id_evento = ?");
+        try (Connection cn = Conexion.conectar(); PreparedStatement consulta = cn.prepareStatement(sql)) {
+
             consulta.setString(1, evento.getNombreEvento());
             consulta.setString(2, evento.getDescripcionEvento());
             consulta.setString(3, evento.getFecha());
             consulta.setString(4, evento.getHora());
-            consulta.setInt(5, evento.getIdCategoria());
-            consulta.setInt(6, evento.getIdArtista());
-            consulta.setInt(7, evento.getIdEvento());
+            consulta.setString(5, evento.getDireccion());
+            consulta.setBytes(6, evento.getPoster());
+            consulta.setInt(7, evento.getIdCategoria());
+            consulta.setInt(8, evento.getIdArtista());
+            consulta.setInt(9, evento.getIdEvento());
 
             respuesta = consulta.executeUpdate() > 0;
 
@@ -133,44 +113,28 @@ public int guardarEvento(Evento evento) {
         } catch (SQLException e) {
             System.out.println("Error al actualizar evento: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
         return respuesta;
     }
 
     public boolean existeEvento(String nombreEvento) {
         boolean existe = false;
-        Connection cn = Conexion.conectar();
+        String sql = "SELECT * FROM Eventos WHERE nombre_evento = ?";
 
-        try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT * FROM Eventos WHERE nombre_evento = ?");
+        try (Connection cn = Conexion.conectar(); PreparedStatement consulta = cn.prepareStatement(sql)) {
+
             consulta.setString(1, nombreEvento);
-            ResultSet rs = consulta.executeQuery();
-
-            if (rs.next()) {
-                // Si el ResultSet tiene al menos una fila, el evento existe
-                existe = true;
+            try (ResultSet rs = consulta.executeQuery()) {
+                if (rs.next()) {
+                    // Si el ResultSet tiene al menos una fila, el evento existe
+                    existe = true;
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error al verificar si existe el evento: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return existe;
     }
+
 }

@@ -6,7 +6,6 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_Artista;
-import controlador.Ctrl_Localidades;
 import controlador.RenderTabla;
 import java.awt.Component;
 import java.awt.Font;
@@ -25,7 +24,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Artista;
 import modelo.Evento;
-import modelo.Localidad;
 
 /**
  *
@@ -80,7 +78,6 @@ public class Menu_Principal extends javax.swing.JFrame {
         labelDireccion = new javax.swing.JLabel();
         labelEspecialidadArtista = new javax.swing.JLabel();
         jLabel7F2 = new javax.swing.JLabel();
-        labelLugar = new javax.swing.JLabel();
         labelNombreArtista = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -140,7 +137,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         labelHora.setText("00:00:00");
 
         jLabel7F1.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
-        jLabel7F1.setText("LUGAR:");
+        jLabel7F1.setText("Direccion:");
 
         labelDireccion.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
         labelDireccion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -152,10 +149,6 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         jLabel7F2.setFont(new java.awt.Font("Microsoft YaHei", 1, 12)); // NOI18N
         jLabel7F2.setText("ARTISTA INVITADO:");
-
-        labelLugar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
-        labelLugar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelLugar.setText("Lugar");
 
         labelNombreArtista.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 12)); // NOI18N
         labelNombreArtista.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -197,9 +190,6 @@ public class Menu_Principal extends javax.swing.JFrame {
                                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(336, 336, 336)
-                                .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(234, 234, 234)
                                 .addComponent(jLabel7F2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,11 +228,9 @@ public class Menu_Principal extends javax.swing.JFrame {
                                 .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7F1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(35, 35, 35)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -569,7 +557,8 @@ public class Menu_Principal extends javax.swing.JFrame {
                 evento = new Evento();
                 evento.setIdEvento(rs.getInt("id_evento"));
                 evento.setNombreEvento(rs.getString("nombre_evento"));
-                evento.setDescripcionEvento(rs.getString("descripción_evento"));
+                // Corrige el nombre de columna aquí
+                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
                 byte[] bytePoster = rs.getBytes("poster");
@@ -586,7 +575,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     private Evento obtenerEventoPorDescripcion(String descripcion) {
         Evento evento = null;
         Connection conexion = Conexion.conectar();
-        String consulta = "SELECT * FROM eventos WHERE descripción_evento = ? LIMIT 1";
+        String consulta = "SELECT * FROM eventos WHERE descripcion_evento = ? LIMIT 1";
         try {
             PreparedStatement ps = conexion.prepareStatement(consulta);
             ps.setString(1, descripcion);
@@ -595,7 +584,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 evento = new Evento();
                 evento.setIdEvento(rs.getInt("id_evento"));
                 evento.setNombreEvento(rs.getString("nombre_evento"));
-                evento.setDescripcionEvento(rs.getString("descripción_evento"));
+                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
                 // Obtener el póster como un array de bytes y establecerlo directamente
@@ -689,7 +678,6 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelEspecialidadArtista;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JLabel labelHora;
-    private javax.swing.JLabel labelLugar;
     private javax.swing.JLabel labelNombreArtista;
     private javax.swing.JLabel labelTitulo;
     public static javax.swing.JTable tabla;
@@ -723,9 +711,10 @@ public class Menu_Principal extends javax.swing.JFrame {
                 Evento evento = new Evento();
                 evento.setIdEvento(rs.getInt("id_evento"));
                 evento.setNombreEvento(rs.getString("nombre_evento"));
-                evento.setDescripcionEvento(rs.getString("descripción_evento"));
+                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
+                evento.setDireccion(rs.getString("direccion"));
                 evento.setIdArtista(rs.getInt("id_artista"));
                 eventos.add(evento);
             }
@@ -739,10 +728,16 @@ public class Menu_Principal extends javax.swing.JFrame {
     public void showImage(Integer index) {
         if (index >= 0 && index < imgList.size() && index < eventosList.size()) {
             Evento evento = eventosList.get(index);
-            Image img = new ImageIcon(imgList.get(index)).getImage().getScaledInstance(LabelImagen.getWidth(), LabelImagen.getHeight(), Image.SCALE_SMOOTH);
-            LabelImagen.setIcon(new ImageIcon(img));
-
-            mostrarInformacionEvento(evento);
+            byte[] imageData = imgList.get(index);
+            if (imageData != null) {
+                Image img = new ImageIcon(imageData).getImage().getScaledInstance(LabelImagen.getWidth(), LabelImagen.getHeight(), Image.SCALE_SMOOTH);
+                LabelImagen.setIcon(new ImageIcon(img));
+                mostrarInformacionEvento(evento);
+            } else {
+                System.out.println("Error: El array de bytes de la imagen es nulo.");
+            }
+        } else {
+            System.out.println("Error: Índice de imagen fuera de rango.");
         }
     }
 
@@ -752,6 +747,7 @@ public class Menu_Principal extends javax.swing.JFrame {
             labelDescripcion.setText(evento.getDescripcionEvento());
             labelFecha.setText(evento.getFecha());
             labelHora.setText(evento.getHora());
+            labelDireccion.setText(evento.getDireccion());
 
             Artista artista = obtenerArtistaPorID(evento.getIdArtista());
             if (artista != null) {
@@ -759,13 +755,11 @@ public class Menu_Principal extends javax.swing.JFrame {
                 labelEspecialidadArtista.setText(artista.getEspecialidad());
             }
 
-            
         } else {
             labelTitulo.setText("");
             labelDescripcion.setText("");
             labelFecha.setText("");
             labelHora.setText("");
-            labelLugar.setText("");
             labelDireccion.setText("");
             labelNombreArtista.setText("");
             labelEspecialidadArtista.setText("");
@@ -783,8 +777,6 @@ public class Menu_Principal extends javax.swing.JFrame {
         return null;
     }
 
-
-
     private void initTabla() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setRowCount(0);
@@ -794,11 +786,11 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripción_evento, poster FROM eventos");
+            PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripcion_evento, poster FROM eventos");
             ResultSet rs = consulta.executeQuery();
             while (rs.next()) {
                 String nombreEvento = rs.getString("nombre_evento");
-                String descripcionEvento = rs.getString("descripción_evento");
+                String descripcionEvento = rs.getString("descripcion_evento");
                 byte[] poster = rs.getBytes("poster");
                 modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster, bt1});
             }

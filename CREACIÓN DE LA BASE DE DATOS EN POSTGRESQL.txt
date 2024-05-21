@@ -33,7 +33,7 @@ CREATE TABLE Eventos (
     descripcion_evento TEXT,
     fecha VARCHAR NOT NULL,
     hora VARCHAR NOT NULL,
-    dirección VARCHAR NOT NULL,
+    direccion VARCHAR NOT NULL,
     poster BYTEA,
     id_categoria INTEGER REFERENCES Categorias(id_categoria),
     id_artista INTEGER REFERENCES Artistas(id_artista)
@@ -91,7 +91,7 @@ VALUES
 ('Teatro');
 
 -- Insertar datos en la tabla Eventos
-INSERT INTO Eventos (nombre_evento, descripcion_evento, fecha, hora, dirección, poster, id_categoria, id_artista)
+INSERT INTO Eventos (nombre_evento, descripcion_evento, fecha, hora, direccion, poster, id_categoria, id_artista)
 VALUES 
 ('Concierto de Rock', 'Un concierto de rock en vivo.', '2024-06-10', '20:00', 'Calle Falsa 123', NULL, 1, 1),
 ('Obra de Teatro', 'Una emocionante obra de teatro.', '2024-07-15', '19:00', 'Avenida Siempre Viva 456', NULL, 2, 2);
