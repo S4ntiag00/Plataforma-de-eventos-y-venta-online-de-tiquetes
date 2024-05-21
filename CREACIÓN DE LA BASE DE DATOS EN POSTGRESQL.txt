@@ -1,92 +1,117 @@
-
-
 -- Creación de la tabla Usuarios
 CREATE TABLE Usuarios (
-    ID_Usuario SERIAL PRIMARY KEY,
-    Nombre VARCHAR(50),
-    Apellido VARCHAR(50),
-    Email VARCHAR(100),
-    Contraseña VARCHAR(100),
-    Teléfono VARCHAR(20),
-    Tipo_Usuario VARCHAR(20)
+    id_usuario SERIAL PRIMARY KEY,
+    correo_electronico VARCHAR(100) NOT NULL UNIQUE,
+    contrasena VARCHAR(100) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    documento_identificacion VARCHAR(50) NOT NULL,
+    teléfono VARCHAR,
+    genero VARCHAR(10),
+    fecha_nacimiento DATE
 );
-
 
 -- Creación de la tabla Artistas
 CREATE TABLE Artistas (
-    ID_Artista SERIAL PRIMARY KEY,
-    Nombre_Artista VARCHAR(100),
-    Especialidad VARCHAR(100)
+    id_artista SERIAL PRIMARY KEY,
+    nombre_artista VARCHAR(100) NOT NULL,
+    especialidad VARCHAR(100)
 );
 
 
 
-
--- Creación de la tabla Locaciones
-CREATE TABLE Locaciones (
-    ID_Locacion SERIAL PRIMARY KEY,
-    Nombre_Locacion VARCHAR(100),
-    Capacidad INTEGER,
-    Dirección TEXT
+-- Creación de la tabla Categorias
+CREATE TABLE Categorias (
+    id_categoria SERIAL PRIMARY KEY,
+    nombre_categoria VARCHAR(100) NOT NULL
 );
-
-
-
-
--- Creación de la tabla Categorías
-CREATE TABLE Categorías (
-    ID_Categoria SERIAL PRIMARY KEY,
-    Nombre_Categoria VARCHAR(100)
-);
-
-
--- Creación de la tabla Organizadores
-CREATE TABLE Organizadores (
-    ID_Organizador SERIAL PRIMARY KEY,
-    Nombre_Organizador VARCHAR(100),
-    Contacto VARCHAR(100),
-    Usuario_ID INTEGER REFERENCES Usuarios(ID_Usuario)
-);
-
-
-
 
 -- Creación de la tabla Eventos
 CREATE TABLE Eventos (
-    ID_Evento SERIAL PRIMARY KEY,
-    Nombre_Evento VARCHAR(100),
-    Descripción_Evento TEXT,
-    Fecha DATE,
-    Hora TIME,
-    Precio_Tiquete NUMERIC(10, 2),
-    ID_Categoria INTEGER REFERENCES Categorías(ID_Categoria),
-    ID_Locacion INTEGER REFERENCES Locaciones(ID_Locacion),
-    ID_Artista INTEGER REFERENCES Artistas(ID_Artista),
-    ID_Organizador INTEGER REFERENCES Organizadores(ID_Organizador)
+    id_evento SERIAL PRIMARY KEY,
+    nombre_evento VARCHAR(100) NOT NULL,
+    descripcion_evento TEXT,
+    fecha VARCHAR NOT NULL,
+    hora VARCHAR NOT NULL,
+    dirección VARCHAR NOT NULL,
+    poster BYTEA,
+    id_categoria INTEGER REFERENCES Categorias(id_categoria),
+    id_artista INTEGER REFERENCES Artistas(id_artista)
 );
 
-
-
-
--- Creación de la tabla Reserva
-CREATE TABLE Reserva (
-    Reserva_ID SERIAL PRIMARY KEY,
-    Cantidad_tiquetes INTEGER,
-    Estado_Reserva VARCHAR(20),
-    Fecha_Reserva DATE,
-    Hora_Reserva TIME,
-    Evento_ID INTEGER REFERENCES Eventos(ID_Evento),
-    Usuario_ID INTEGER REFERENCES Usuarios(ID_Usuario)
+-- Creación de la tabla Localidades
+CREATE TABLE Localidades (
+    id_localidad SERIAL PRIMARY KEY,
+    id_evento INTEGER REFERENCES Eventos(id_evento),
+    tipo_localidad VARCHAR(50) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    espacios_disponibles INTEGER NOT NULL
 );
 
+-- Creación de la tabla Reservas
+CREATE TABLE Reservas (
+    reserva_id SERIAL PRIMARY KEY,
+    cantidad_tiquetes INTEGER NOT NULL,
+    estado_reserva VARCHAR(20) NOT NULL,
+    fecha_reserva VARCHAR NOT NULL,
+    hora_reserva VARCHAR NOT NULL,
+    evento_id INTEGER REFERENCES Eventos(id_evento),
+    usuario_id INTEGER REFERENCES Usuarios(id_usuario),
+    localidad_id INTEGER REFERENCES Localidades(id_localidad)
+);
 
 -- Creación de la tabla Pagos
 CREATE TABLE Pagos (
-    ID_Pago SERIAL PRIMARY KEY,
-    Metodo_Pago VARCHAR(50),
-    Estado_Pago VARCHAR(20),
-    Monto_Total NUMERIC(10, 2),
-    Fecha_pago DATE,
-    Hora_pago TIME,
-    Reserva_ID INTEGER REFERENCES Reserva(Reserva_ID)
+    id_pago SERIAL PRIMARY KEY,
+    metodo_pago VARCHAR(50) NOT NULL,
+    estado_pago VARCHAR(20) NOT NULL,
+    monto_total DECIMAL(10, 2) NOT NULL,
+    fecha_pago VARCHAR NOT NULL,
+    hora_pago VARCHAR NOT NULL,
+    reserva_id INTEGER REFERENCES Reservas(reserva_id)
 );
+
+
+-- Insertar datos en la tabla Usuarios
+INSERT INTO Usuarios (correo_electronico, contrasena, nombre, apellido, documento_identificacion, teléfono, genero, fecha_nacimiento)
+VALUES 
+('1', '1', 'Juan', 'Perez', '12345678', '1234567890', 'Masculino', '1990-01-01'),
+('maria.gomez@example.com', 'password456', 'Maria', 'Gomez', '87654321', '0987654321', 'Femenino', '1985-05-15');
+
+-- Insertar datos en la tabla Artistas
+INSERT INTO Artistas (nombre_artista, especialidad)
+VALUES 
+('Banda A', 'Rock'),
+('Solista B', 'Pop');
+
+-- Insertar datos en la tabla Categorias
+INSERT INTO Categorias (nombre_categoria)
+VALUES 
+('Concierto'),
+('Teatro');
+
+-- Insertar datos en la tabla Eventos
+INSERT INTO Eventos (nombre_evento, descripcion_evento, fecha, hora, dirección, poster, id_categoria, id_artista)
+VALUES 
+('Concierto de Rock', 'Un concierto de rock en vivo.', '2024-06-10', '20:00', 'Calle Falsa 123', NULL, 1, 1),
+('Obra de Teatro', 'Una emocionante obra de teatro.', '2024-07-15', '19:00', 'Avenida Siempre Viva 456', NULL, 2, 2);
+
+-- Insertar datos en la tabla Localidades
+INSERT INTO Localidades (id_evento, tipo_localidad, precio, espacios_disponibles)
+VALUES 
+(1, 'VIP', 100.00, 50),
+(1, 'General', 50.00, 100),
+(2, 'Platea', 75.00, 60),
+(2, 'Balcón', 40.00, 80);
+
+-- Insertar datos en la tabla Reservas
+INSERT INTO Reservas (cantidad_tiquetes, estado_reserva, fecha_reserva, hora_reserva, evento_id, usuario_id, localidad_id)
+VALUES 
+(2, 'Confirmada', '2024-05-20', '14:30', 1, 1, 1),
+(1, 'Pendiente', '2024-05-21', '15:00', 2, 2, 3);
+
+-- Insertar datos en la tabla Pagos
+INSERT INTO Pagos (metodo_pago, estado_pago, monto_total, fecha_pago, hora_pago, reserva_id)
+VALUES 
+('Tarjeta de Crédito', 'Completado', 200.00, '2024-05-20', '14:45', 1),
+('PayPal', 'Pendiente', 75.00, '2024-05-21', '15:15', 2);
