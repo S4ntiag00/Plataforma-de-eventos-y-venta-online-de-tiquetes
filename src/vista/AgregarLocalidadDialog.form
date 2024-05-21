@@ -60,25 +60,16 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtNombreLocalidad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="NombreLocalidad"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreLocalidadActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEspaciosDisponibles">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Espacios Disponibles"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEspaciosDisponiblesActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Precio"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
       </Events>

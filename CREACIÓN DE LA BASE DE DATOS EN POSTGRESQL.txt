@@ -75,14 +75,9 @@ CREATE TABLE Pagos (
 -- Insertar datos en la tabla Usuarios
 INSERT INTO Usuarios (correo_electronico, contrasena, nombre, apellido, documento_identificacion, teléfono, genero, fecha_nacimiento)
 VALUES 
-('1', '1', 'Juan', 'Perez', '12345678', '1234567890', 'Masculino', '1990-01-01'),
-('maria.gomez@example.com', 'password456', 'Maria', 'Gomez', '87654321', '0987654321', 'Femenino', '1985-05-15');
+('1', '1', 'Jhon', 'Osma', '12345678', '3333333333', 'Masculino', '2004-06-27');
 
--- Insertar datos en la tabla Artistas
-INSERT INTO Artistas (nombre_artista, especialidad)
-VALUES 
-('Banda A', 'Rock'),
-('Solista B', 'Pop');
+
 
 -- Insertar datos en la tabla Categorias
 INSERT INTO Categorias (nombre_categoria)
@@ -90,28 +85,3 @@ VALUES
 ('Concierto'),
 ('Teatro');
 
--- Insertar datos en la tabla Eventos
-INSERT INTO Eventos (nombre_evento, descripcion_evento, fecha, hora, direccion, poster, id_categoria, id_artista)
-VALUES 
-('Concierto de Rock', 'Un concierto de rock en vivo.', '2024-06-10', '20:00', 'Calle Falsa 123', NULL, 1, 1),
-('Obra de Teatro', 'Una emocionante obra de teatro.', '2024-07-15', '19:00', 'Avenida Siempre Viva 456', NULL, 2, 2);
-
--- Insertar datos en la tabla Localidades
-INSERT INTO Localidades (id_evento, tipo_localidad, precio, espacios_disponibles)
-VALUES 
-(1, 'VIP', 100.00, 50),
-(1, 'General', 50.00, 100),
-(2, 'Platea', 75.00, 60),
-(2, 'Balcón', 40.00, 80);
-
--- Insertar datos en la tabla Reservas
-INSERT INTO Reservas (cantidad_tiquetes, estado_reserva, fecha_reserva, hora_reserva, evento_id, usuario_id, localidad_id)
-VALUES 
-(2, 'Confirmada', '2024-05-20', '14:30', 1, 1, 1),
-(1, 'Pendiente', '2024-05-21', '15:00', 2, 2, 3);
-
--- Insertar datos en la tabla Pagos
-INSERT INTO Pagos (metodo_pago, estado_pago, monto_total, fecha_pago, hora_pago, reserva_id)
-VALUES 
-('Tarjeta de Crédito', 'Completado', 200.00, '2024-05-20', '14:45', 1),
-('PayPal', 'Pendiente', 75.00, '2024-05-21', '15:15', 2);

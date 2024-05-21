@@ -38,6 +38,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     ArrayList<byte[]> imgList;
     private List<Evento> eventosList;
     private DefaultTableModel modeloTabla;
+    private String textoBusqueda;
 
     public Menu_Principal() {
         initComponents();
@@ -47,6 +48,9 @@ public class Menu_Principal extends javax.swing.JFrame {
             showImage(imgIndex);
         }
         initTabla();
+
+        TextPrompt phn = new TextPrompt("Escribe un Nombre o Categoria", Txt_buscarEvento);
+        this.setLocationRelativeTo(null);
 
     }
 
@@ -84,7 +88,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        Txt_buscarEvento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -388,8 +392,17 @@ public class Menu_Principal extends javax.swing.JFrame {
         jLabel2.setToolTipText("");
 
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setText("Nombre del Evento");
+        Txt_buscarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Txt_buscarEventoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         jLabel3.setText("jLabel3");
@@ -430,7 +443,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                                             .addComponent(jLabel4))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(0, 0, Short.MAX_VALUE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(Txt_buscarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jButton2)
@@ -457,7 +470,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Txt_buscarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(12, 12, 12))
                             .addComponent(jLabel2)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -525,9 +538,10 @@ public class Menu_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonComprarSliderActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.dispose();
+
         Login login = new Login();
         login.setVisible(true);
+        login.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
@@ -544,6 +558,20 @@ public class Menu_Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tablaMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        textoBusqueda = Txt_buscarEvento.getText().trim();
+        Ventana_Busqueda vb = new Ventana_Busqueda(textoBusqueda);
+        vb.setVisible(true);
+        vb.setLocationRelativeTo(null);
+        this.dispose();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void Txt_buscarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_buscarEventoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Txt_buscarEventoActionPerformed
 
     private Evento obtenerEventoPorFila(int fila) {
         Evento evento = null;
@@ -610,6 +638,7 @@ public class Menu_Principal extends javax.swing.JFrame {
             detallesEvento.setFecha(evento.getFecha());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
             detallesEvento.setVisible(true);
+            detallesEvento.setLocationRelativeTo(null);
         }
     }
 
@@ -651,6 +680,7 @@ public class Menu_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelImagen;
+    private javax.swing.JTextField Txt_buscarEvento;
     private javax.swing.JButton botonAnterior;
     private javax.swing.JButton botonComprarSlider;
     private javax.swing.JButton botonSiguiente;
@@ -672,7 +702,6 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelDescripcion;
     private javax.swing.JLabel labelDireccion;
     private javax.swing.JLabel labelEspecialidadArtista;

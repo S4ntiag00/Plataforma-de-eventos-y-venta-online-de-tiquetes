@@ -23,6 +23,7 @@ import modelo.Categoria;
 import modelo.Evento;
 import modelo.Localidad;
 
+
 /**
  *
  * @author andres
@@ -40,6 +41,13 @@ public class CrearEventos extends javax.swing.JFrame {
     public CrearEventos() {
         initComponents();
         cargarCategorias();
+        TextPrompt phn = new TextPrompt("Nombre del Evento ",txt_nombreEvento); 
+        TextPrompt phd = new TextPrompt("Descripcion del Evento",txt_descripcionEvento); 
+        TextPrompt phfe = new TextPrompt("Fecha del Evento",txt_fecha); 
+        TextPrompt phhe = new TextPrompt("Hora del Evento",txt_hora); 
+        TextPrompt phde = new TextPrompt("Direccion del Evento",txt_direccion); 
+        TextPrompt pha = new TextPrompt("Artista, Grupo, Organizacion",txt_nombreArtista); 
+        TextPrompt phe = new TextPrompt("Acto, Especialidad, Campo ",txt_especialidad); 
 
     }
 
@@ -76,7 +84,7 @@ public class CrearEventos extends javax.swing.JFrame {
         comboBoxCategoria = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,28 +113,24 @@ public class CrearEventos extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        txt_nombreEvento.setText("Nombre Evento");
         txt_nombreEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nombreEventoActionPerformed(evt);
             }
         });
 
-        txt_hora.setText("Hora de Evento");
         txt_hora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_horaActionPerformed(evt);
             }
         });
 
-        txt_fecha.setText("Fecha de Evento");
         txt_fecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_fechaActionPerformed(evt);
             }
         });
 
-        txt_descripcionEvento.setText("Descripcion de Evento");
         txt_descripcionEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_descripcionEventoActionPerformed(evt);
@@ -139,7 +143,6 @@ public class CrearEventos extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("General");
 
-        txt_direccion.setText("Direccion");
         txt_direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_direccionActionPerformed(evt);
@@ -149,14 +152,12 @@ public class CrearEventos extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Artista");
 
-        txt_nombreArtista.setText("Nombre Artista");
         txt_nombreArtista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nombreArtistaActionPerformed(evt);
             }
         });
 
-        txt_especialidad.setText("Especialidad");
         txt_especialidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_especialidadActionPerformed(evt);
@@ -441,6 +442,7 @@ public class CrearEventos extends javax.swing.JFrame {
         this.dispose();
         Menu_Principal menu_Principal = new Menu_Principal();
         menu_Principal.setVisible(true);
+        menu_Principal.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

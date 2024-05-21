@@ -41,7 +41,7 @@ public class Login extends javax.swing.JFrame {
         boton_crear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -155,8 +155,10 @@ public class Login extends javax.swing.JFrame {
                     boolean inicioSesionExitoso = ctrl_Usuario.iniciarSesion(usuario);
                     if (inicioSesionExitoso) {
                         this.dispose();
+                        
                         CrearEventos eventos = new CrearEventos();
                         eventos.setVisible(true);
+                        eventos.setLocationRelativeTo(null);
                         // Inicio de sesión exitoso
                     } else {
                         // Contraseña incorrecta
