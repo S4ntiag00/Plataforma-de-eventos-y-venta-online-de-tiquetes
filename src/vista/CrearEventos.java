@@ -34,7 +34,6 @@ public class CrearEventos extends javax.swing.JFrame {
      * Creates new form CrearEventos
      */
     private byte[] fis;
-    private int longitudFoto;
     private ArrayList<Localidad> listaLocalidades = new ArrayList<>();
     private List<Categoria> categorias;
 
@@ -350,14 +349,13 @@ public class CrearEventos extends javax.swing.JFrame {
         Ctrl_Artista controlArtista = new Ctrl_Artista();
         Ctrl_Localidades controlLocalidad = new Ctrl_Localidades();
 
-        // Verificar que los campos no estén vacíos
         if (txt_nombreEvento.getText().isEmpty() || txt_descripcionEvento.getText().isEmpty()
                 || txt_fecha.getText().isEmpty() || txt_hora.getText().isEmpty()
                 || txt_direccion.getText().isEmpty()
                 || txt_nombreArtista.getText().isEmpty() || txt_especialidad.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.");
-            return; // Salir si hay campos vacíos
+            return; 
         }
 
         // Verificar y crear el artista si no existe
@@ -409,7 +407,7 @@ public class CrearEventos extends javax.swing.JFrame {
         txt_direccion.setText("");
         txt_nombreArtista.setText("");
         txt_especialidad.setText("");
-        listaLocalidades.clear();  // Limpiar la lista de localidades
+        listaLocalidades.clear();  
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -430,7 +428,7 @@ public class CrearEventos extends javax.swing.JFrame {
 
                 // Almacenar la imagen seleccionada y su longitud
                 fis = Files.readAllBytes(file.toPath());
-                longitudFoto = (int) file.length();
+                
 
             } catch (IOException ex) {
                 System.out.println("Error al cargar la imagen: " + ex.getMessage());

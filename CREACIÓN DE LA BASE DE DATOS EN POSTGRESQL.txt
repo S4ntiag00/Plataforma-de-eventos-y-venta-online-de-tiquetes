@@ -6,7 +6,7 @@ CREATE TABLE Usuarios (
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     documento_identificacion VARCHAR(50) NOT NULL,
-    teléfono VARCHAR,
+    telefono VARCHAR,
     genero VARCHAR(10),
     fecha_nacimiento DATE
 );
