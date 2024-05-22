@@ -17,7 +17,7 @@ public class Ctrl_Usuario {
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT INTO Usuarios (nombre, apellido, correo_electronico, contrasena, telefono,genero, documento_identidicacion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT INTO Usuarios (nombre, apellido, correo_electronico, contrasena, telefono,genero, documento_identificacion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             consulta.setString(1, usuario.getNombre());
             consulta.setString(2, usuario.getApellido());
             consulta.setString(3, usuario.getCorreoElectronico());
@@ -66,7 +66,7 @@ public class Ctrl_Usuario {
                 usuario.setCorreoElectronico(rs.getString("correo_electronico"));
                 usuario.setContrasena(rs.getString("contraseña"));
                 usuario.setTelefono(rs.getString("telefono"));
-                usuario.setDocumentoIdentificacion(rs.getString("documento_identidicacion"));
+                usuario.setDocumentoIdentificacion(rs.getString("documento_identificacion"));
                 usuario.setFechaNacimiento(rs.getString("fecha_nacimiento"));
 
                 usuarios.add(usuario);
