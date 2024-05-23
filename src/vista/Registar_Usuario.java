@@ -1,7 +1,9 @@
 package vista;
 
 import controlador.Ctrl_Usuario;
+import java.sql.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import modelo.Usuario;
 
 /**
@@ -39,11 +41,12 @@ public class Registar_Usuario extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Npmbre1 = new javax.swing.JLabel();
         Apellido2 = new javax.swing.JLabel();
-        txt_fechaNacimiento = new javax.swing.JTextField();
         Apellido3 = new javax.swing.JLabel();
-        txt_genero = new javax.swing.JTextField();
         txt_Documento = new javax.swing.JTextField();
         Apellido4 = new javax.swing.JLabel();
+        genero_combobox = new javax.swing.JComboBox<>();
+        txtfecha = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registar Usuario");
@@ -90,21 +93,9 @@ public class Registar_Usuario extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña");
 
-        Apellido2.setText("FechaNac");
-
-        txt_fechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_fechaNacimientoActionPerformed(evt);
-            }
-        });
+        Apellido2.setText("Fecha Nacimiento ");
 
         Apellido3.setText("Genero");
-
-        txt_genero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_generoActionPerformed(evt);
-            }
-        });
 
         txt_Documento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +105,22 @@ public class Registar_Usuario extends javax.swing.JFrame {
 
         Apellido4.setText("Documento");
 
+        genero_combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Masculino", "Femenino" }));
+        genero_combobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genero_comboboxActionPerformed(evt);
+            }
+        });
+
+        txtfecha.setDateFormatString("yyyy-MM-dd");
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,79 +128,88 @@ public class Registar_Usuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Npmbre)
-                            .addComponent(Email)
-                            .addComponent(Apellido)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(Apellido2)
-                            .addComponent(Apellido3)
-                            .addComponent(Apellido4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_genero, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addComponent(Npmbre1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Apellido4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(Email)
+                                        .addComponent(jLabel2)
+                                        .addComponent(Apellido)
+                                        .addComponent(Npmbre))
+                                    .addGap(58, 58, 58)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Apellido3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(genero_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(Apellido2)
+                                    .addGap(19, 19, 19)
+                                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(Npmbre1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Npmbre))
-                                        .addGap(30, 30, 30)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Apellido))
-                                        .addGap(30, 30, 30)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Email))
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jLabel2))
-                                    .addComponent(txt_telefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Apellido2)
-                                    .addComponent(txt_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(56, 56, 56))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Apellido3)))
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Apellido4)))
-                .addGap(13, 13, 13)
-                .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Npmbre))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Apellido))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Apellido4)
+                    .addComponent(txt_Documento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Apellido2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(genero_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Apellido3))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -206,8 +222,6 @@ public class Registar_Usuario extends javax.swing.JFrame {
         txt_apellido.setText("");
         txt_Documento.setText("");
         txt_telefono.setText("");
-        txt_fechaNacimiento.setText("");
-        txt_genero.setText("");
         txt_email.setText("");
     }
 
@@ -219,7 +233,7 @@ public class Registar_Usuario extends javax.swing.JFrame {
         try {
             // Validar nombre y apellido
             if (txt_nombre.getText().trim().isEmpty()) {
-                mensajeError.append("- El campo Nombre está vacío\n");
+                mensajeError.append("- El campo Nombre está vacío.\n");
                 camposValidos = false;
             }
             if (txt_apellido.getText().trim().isEmpty()) {
@@ -246,13 +260,13 @@ public class Registar_Usuario extends javax.swing.JFrame {
             }
 
             // Validar fecha de nacimiento
-            if (txt_fechaNacimiento.getText().trim().isEmpty()) {
+            if (txtfecha.getDate() == null) {
                 mensajeError.append("- El campo Fecha de Nacimiento está vacío.\n");
                 camposValidos = false;
             }
 
-            // Validar género
-            if (txt_genero.getText().trim().isEmpty()) {
+            // Validar género_combobox
+            if (genero_combobox.getSelectedItem().toString().trim().isEmpty()) {
                 mensajeError.append("- El campo Género está vacío.\n");
                 camposValidos = false;
             }
@@ -262,54 +276,65 @@ public class Registar_Usuario extends javax.swing.JFrame {
                 mensajeError.append("- El campo Contraseña está vacío.\n");
                 camposValidos = false;
             }
-
-            // Si alguna validación falla, mostrar un mensaje único
-            if (!camposValidos) {
-                JOptionPane.showMessageDialog(this, "Por favor, corrija los siguientes campos:\n\n" + mensajeError.toString());
-            } else {
-                // Si todas las validaciones pasan, los campos son válidos
-                System.out.println("Todos los campos son válidos.");
-
-                // Obtener los valores de los campos de texto
-                String correo = txt_email.getText();
-                String contraseña = txt_contrasena.getText();
-                String nombre = txt_nombre.getText();
-                String apellido = txt_apellido.getText();
-                String documento = txt_Documento.getText();
-                String telefono = txt_telefono.getText();
-                String fechaNacimientoUsuario = txt_fechaNacimiento.getText();
-                String genero = txt_genero.getText();
-
-                // Crear un objeto Usuario con los valores ingresados
-               Usuario usuario = new Usuario(WIDTH, correo, contraseña, nombre, apellido, documento, nombre, apellido, fechaNacimientoUsuario);
-
-                // Llamar al método para guardar el usuario en la base de datos
-                Ctrl_Usuario controladorUsuario = new Ctrl_Usuario();
-                controladorUsuario.guardarUsuario(usuario);
-
-                // Mostrar un mensaje de éxito
-                JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.");
-
-                // Limpiar los campos después de registrar el usuario
-                LimpiarCampos();
-
-                // Cerrar la ventana actual
-                this.dispose();
-
-                // Mostrar la ventana de inicio de sesión
-                Login login = new Login();
-                login.setVisible(true);
-                login.setLocationRelativeTo(null);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
+        // Si alguna validación falla, mostrar un mensaje único
+        if (!camposValidos) {
+            JOptionPane.showMessageDialog(this, "Por favor, corrija los siguientes campos:\n\n" + mensajeError.toString());
+        } else {
+            // Si todas las validaciones pasan, los campos son válidos
+            System.out.println("Todos los campos son válidos.");
+
+            // Obtener los valores de los campos de texto
+            String correo = txt_email.getText();
+            String contraseña = txt_contrasena.getText();
+            String nombre = txt_nombre.getText();
+            String apellido = txt_apellido.getText().trim();
+            String documento = txt_Documento.getText();
+            String telefono = txt_telefono.getText();
+            String fecha_nacimiento = ((JTextField) txtfecha.getDateEditor().getUiComponent()).getText();
+            System.out.println("fecha del jdatechoser" + fecha_nacimiento);
+            String genero = genero_combobox.getSelectedItem().toString();
+            System.out.println(genero);
+            System.out.println(fecha_nacimiento);
+
+            // Crear un objeto Usuario con los valores ingresados
+            Usuario usuario = new Usuario();
+            usuario.setCorreoElectronico(correo);
+            usuario.setContrasena(contraseña);
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setDocumentoIdentificacion(documento);
+            usuario.setTelefono(telefono);
+            usuario.setGenero(genero);
+            usuario.setFechaNacimiento(Date.valueOf(fecha_nacimiento));
+
+            // Llamar al método para guardar el usuario en la base de datos
+            Ctrl_Usuario controladorUsuario = new Ctrl_Usuario();
+            controladorUsuario.guardarUsuario(usuario);
+
+            // Mostrar un mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.");
+
+            // Limpiar los campos después de registrar el usuario
+            LimpiarCampos();
+
+            // Cerrar la ventana actual
+            this.dispose();
+
+            // Mostrar la ventana de inicio de sesión
+            Login login = new Login();
+            login.setVisible(true);
+            login.setLocationRelativeTo(null);
+            login.setResizable(false);
+        }
+
+    }
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         validarCampos();
-        LimpiarCampos();
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
     private void txt_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellidoActionPerformed
@@ -328,17 +353,21 @@ public class Registar_Usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_contrasenaActionPerformed
 
-    private void txt_fechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaNacimientoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_fechaNacimientoActionPerformed
-
-    private void txt_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_generoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_generoActionPerformed
-
     private void txt_DocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_DocumentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_DocumentoActionPerformed
+
+    private void genero_comboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genero_comboboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_genero_comboboxActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        Login login= new Login();
+        login.setVisible(true);
+        login.setResizable(false);
+        login.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -350,16 +379,17 @@ public class Registar_Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel Npmbre;
     private javax.swing.JLabel Npmbre1;
     private javax.swing.JButton btn_aceptar;
+    private javax.swing.JComboBox<String> genero_combobox;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txt_Documento;
     private javax.swing.JTextField txt_apellido;
     private javax.swing.JTextField txt_contrasena;
     private javax.swing.JTextField txt_email;
-    private javax.swing.JTextField txt_fechaNacimiento;
-    private javax.swing.JTextField txt_genero;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_telefono;
+    private com.toedter.calendar.JDateChooser txtfecha;
     // End of variables declaration//GEN-END:variables
 
 }

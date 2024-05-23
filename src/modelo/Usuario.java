@@ -1,4 +1,8 @@
 package modelo;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author ediso
@@ -13,9 +17,9 @@ private int idUsuario;
     private String documentoIdentificacion;
     private String genero;
     private String telefono;
-    private String fechaNacimiento;
+    private Date fecha_nacimiento;
 
-    public Usuario(int idUsuario, String correoElectronico, String contrasena, String nombre, String apellido, String documentoIdentificacion, String genero, String telefono, String fechaNacimiento) {
+    public Usuario(int idUsuario, String correoElectronico, String contrasena, String nombre, String apellido, String documentoIdentificacion, String genero, String telefono, Date fecha_nacimiento) {
         this.idUsuario = idUsuario;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
@@ -24,7 +28,7 @@ private int idUsuario;
         this.documentoIdentificacion = documentoIdentificacion;
         this.genero = genero;
         this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
+        this.fecha_nacimiento=fecha_nacimiento;   
     }
 
     public Usuario() {
@@ -94,12 +98,12 @@ private int idUsuario;
         this.telefono = telefono;
     }
 
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
+    public Date getFechaNacimiento() {
+        return fecha_nacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setFechaNacimiento(Date fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     

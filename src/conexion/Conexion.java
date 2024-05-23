@@ -13,7 +13,7 @@ public class Conexion {
     //conexion local
     public static Connection conectar() {
         try {
-            Connection cn = DriverManager.getConnection("jdbc:postgresql:Base2", "postgres", "2706");
+            Connection cn = DriverManager.getConnection("jdbc:postgresql:Base2", "postgres", "Sant123*");
             return cn;
         } catch (SQLException e) {
             System.out.println("Error en la conexion local " + e);

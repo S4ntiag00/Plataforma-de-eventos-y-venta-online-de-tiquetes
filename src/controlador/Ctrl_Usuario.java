@@ -2,6 +2,7 @@ package controlador;
 
 import conexion.Conexion;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +26,7 @@ public class Ctrl_Usuario {
             consulta.setString(5, usuario.getTelefono());
             consulta.setString(6, usuario.getGenero());
             consulta.setString(7, usuario.getDocumentoIdentificacion());
-            consulta.setString(8, usuario.getFechaNacimiento());
-         
+            consulta.setDate(8, (Date) usuario.getFechaNacimiento());
 
             respuesta = consulta.executeUpdate() > 0;
 
@@ -67,7 +67,7 @@ public class Ctrl_Usuario {
                 usuario.setContrasena(rs.getString("contraseña"));
                 usuario.setTelefono(rs.getString("telefono"));
                 usuario.setDocumentoIdentificacion(rs.getString("documento_identificacion"));
-                usuario.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                usuario.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
 
                 usuarios.add(usuario);
             }
@@ -85,7 +85,6 @@ public class Ctrl_Usuario {
         return usuarios;
     }
 
-   
 //    public boolean eliminarUsuario(int idUsuario) {
 //        boolean respuesta = false;
 //        Connection cn = Conexion.conectar();
@@ -116,7 +115,6 @@ public class Ctrl_Usuario {
 //
 //        return respuesta;
 //    }
-
 //    // Método para actualizar un usuario
 //    public boolean actualizarUsuario(Usuario usuario) {
 //        boolean respuesta = false;
@@ -154,18 +152,21 @@ public class Ctrl_Usuario {
 //
 //        return respuesta;
 //    }
-
+    
     public boolean iniciarSesion(Usuario usuario) {
         boolean inicioSesionExitoso = false;
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT * FROM Usuarios WHERE correo_electronico = ? AND contrasena = ?");
-            consulta.setString(1, usuario.getNombre());
+            PreparedStatement consulta = cn.prepareStatement("SELECT correo_electronico, contrasena FROM Usuarios WHERE correo_electronico = ? AND contrasena = ?");
+            System.out.println("Correo ingresado: " + usuario.getCorreoElectronico());
+            System.out.println("Contraseña ingresada: " + usuario.getContrasena());
+            consulta.setString(1, usuario.getCorreoElectronico());
             consulta.setString(2, usuario.getContrasena());
             ResultSet rs = consulta.executeQuery();
 
-            inicioSesionExitoso = rs.next(); // Verificar si se encontró alguna coincidencia en la base de datos
+            // Verificar si se encontró alguna coincidencia en la base de datos
+            inicioSesionExitoso = rs.next();
         } catch (SQLException e) {
             System.out.println("Error al iniciar sesión: " + e.getMessage());
         } finally {
@@ -180,28 +181,6 @@ public class Ctrl_Usuario {
         return inicioSesionExitoso;
     }
 
-    public boolean existeUsuario(Usuario usuario) {
-        boolean usuarioExistente = false;
-        Connection cn = Conexion.conectar();
-
-        try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT * FROM Usuarios WHERE correo_electronico = ?");
-            consulta.setString(1, usuario.getNombre());
-            ResultSet rs = consulta.executeQuery();
-
-            usuarioExistente = rs.next(); 
-        } catch (SQLException e) {
-            System.out.println("Error al verificar la existencia del usuario: " + e.getMessage());
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-            }
-        }
-
-        return usuarioExistente;
-    }
+    
 
 }
