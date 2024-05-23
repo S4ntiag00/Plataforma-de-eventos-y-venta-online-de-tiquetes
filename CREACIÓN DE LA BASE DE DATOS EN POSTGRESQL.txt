@@ -8,7 +8,7 @@ CREATE TABLE Usuarios (
     documento_identificacion VARCHAR(50) NOT NULL,
     telefono VARCHAR,
     genero VARCHAR(10),
-    fecha_nacimiento VARCHAR
+    fecha_nacimiento date
 );
 
 -- Creación de la tabla Artistas
