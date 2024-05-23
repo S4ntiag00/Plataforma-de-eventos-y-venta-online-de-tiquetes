@@ -6,10 +6,11 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_Artista;
-import controlador.RenderTabla;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,9 +18,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Artista;
@@ -39,6 +40,8 @@ public class Menu_Principal extends javax.swing.JFrame {
     private List<Evento> eventosList;
     private DefaultTableModel modeloTabla;
     private String textoBusqueda;
+    private Timer timer;
+    private final int TIEMPO_DE_ESPERA = 5000;
 
     public Menu_Principal() {
         initComponents();
@@ -51,7 +54,7 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         TextPrompt phn = new TextPrompt("Escribe un Nombre o Categoria", Txt_buscarEvento);
         this.setLocationRelativeTo(null);
-
+        timerSliderImagenes();
     }
 
     /**
@@ -178,9 +181,9 @@ public class Menu_Principal extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(270, 270, 270)
-                                        .addComponent(jLabel7F1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(147, 147, 147)
+                                        .addComponent(jLabel7F1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -225,13 +228,12 @@ public class Menu_Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7F1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7F1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
@@ -255,116 +257,116 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "", "", "", ""
+                "", "", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Byte.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Byte.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -384,6 +386,9 @@ public class Menu_Principal extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tabla);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -452,7 +457,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2))
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(622, 622, 622)
+                        .addGap(637, 637, 637)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(878, Short.MAX_VALUE))
         );
@@ -480,7 +485,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -521,10 +526,11 @@ public class Menu_Principal extends javax.swing.JFrame {
             imgIndex = 0;
         }
         showImage(imgIndex);
+
     }//GEN-LAST:event_botonSiguienteActionPerformed
 
     private void botonComprarSliderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarSliderActionPerformed
-        String descripcionevento = labelDescripcion.getText();
+        String descripcionevento = labelTitulo.getText();
 
         // Consultar la base de datos para obtener los detalles del evento seleccionado
         Evento eventoSeleccionado = obtenerEventoPorDescripcion(descripcionevento);
@@ -532,8 +538,9 @@ public class Menu_Principal extends javax.swing.JFrame {
         // Mostrar los detalles del evento en la nueva ventana
         if (eventoSeleccionado != null) {
             mostrarDetallesEvento(eventoSeleccionado);
+            this.dispose();
         }
-        this.dispose();
+
 
     }//GEN-LAST:event_botonComprarSliderActionPerformed
 
@@ -572,75 +579,6 @@ public class Menu_Principal extends javax.swing.JFrame {
     private void Txt_buscarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_buscarEventoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Txt_buscarEventoActionPerformed
-
-    private Evento obtenerEventoPorFila(int fila) {
-        Evento evento = null;
-        Connection conexion = Conexion.conectar();
-        String consulta = "SELECT * FROM eventos OFFSET ? LIMIT 1";
-        try {
-            PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setInt(1, fila);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                evento = new Evento();
-                evento.setIdEvento(rs.getInt("id_evento"));
-                evento.setNombreEvento(rs.getString("nombre_evento"));
-                // Corrige el nombre de columna aquí
-                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
-                evento.setFecha(rs.getString("fecha"));
-                evento.setHora(rs.getString("hora"));
-                byte[] bytePoster = rs.getBytes("poster");
-                evento.setPoster(bytePoster);
-                evento.setIdArtista(rs.getInt("id_artista"));
-            }
-            conexion.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
-        }
-        return evento;
-    }
-
-    private Evento obtenerEventoPorDescripcion(String descripcion) {
-        Evento evento = null;
-        Connection conexion = Conexion.conectar();
-        String consulta = "SELECT * FROM eventos WHERE descripcion_evento = ? LIMIT 1";
-        try {
-            PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setString(1, descripcion);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                evento = new Evento();
-                evento.setIdEvento(rs.getInt("id_evento"));
-                evento.setNombreEvento(rs.getString("nombre_evento"));
-                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
-                evento.setFecha(rs.getString("fecha"));
-                evento.setHora(rs.getString("hora"));
-                // Obtener el póster como un array de bytes y establecerlo directamente
-                byte[] bytePoster = rs.getBytes("poster");
-                evento.setPoster(bytePoster);
-                evento.setIdArtista(rs.getInt("id_artista"));
-                // Continuar con el resto de los campos del evento según sea necesario
-            }
-            conexion.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
-        }
-        return evento;
-    }
-
-    private void mostrarDetallesEvento(Evento evento) {
-        if (evento != null) {
-            Detalles_Evento detallesEvento = new Detalles_Evento();
-            detallesEvento.setNombreEvento(evento.getNombreEvento());
-            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
-            detallesEvento.setPoster(evento.getPoster());
-            detallesEvento.setHora(evento.getHora());
-            detallesEvento.setFecha(evento.getFecha());
-            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
-            detallesEvento.setVisible(true);
-            detallesEvento.setLocationRelativeTo(null);
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -712,6 +650,91 @@ public class Menu_Principal extends javax.swing.JFrame {
     public static javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 
+    private Evento obtenerEventoPorFila(int fila) {
+        Evento evento = null;
+        Connection conexion = Conexion.conectar();
+        String consulta = "SELECT * FROM eventos OFFSET ? LIMIT 1";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setInt(1, fila);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                evento = new Evento();
+                evento.setIdEvento(rs.getInt("id_evento"));
+                evento.setNombreEvento(rs.getString("nombre_evento"));
+                // Corrige el nombre de columna aquí
+                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
+                evento.setFecha(rs.getString("fecha"));
+                evento.setHora(rs.getString("hora"));
+                byte[] bytePoster = rs.getBytes("poster");
+                evento.setPoster(bytePoster);
+                evento.setIdArtista(rs.getInt("id_artista"));
+            }
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
+        }
+        return evento;
+    }
+
+    private Evento obtenerEventoPorDescripcion(String descripcion) {
+        Evento evento = null;
+        Connection conexion = Conexion.conectar();
+        String consulta = "SELECT * FROM eventos WHERE nombre_evento = ?";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, descripcion);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                evento = new Evento();
+                evento.setIdEvento(rs.getInt("id_evento"));
+                evento.setNombreEvento(rs.getString("nombre_evento"));
+                evento.setDescripcionEvento(rs.getString("descripcion_evento"));
+                evento.setFecha(rs.getString("fecha"));
+                evento.setHora(rs.getString("hora"));
+                // Obtener el póster como un array de bytes y establecerlo directamente
+                byte[] bytePoster = rs.getBytes("poster");
+                evento.setPoster(bytePoster);
+                evento.setIdArtista(rs.getInt("id_artista"));
+                // Continuar con el resto de los campos del evento según sea necesario
+            }
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener detalles del evento: " + e.getMessage());
+        }
+        return evento;
+    }
+
+    private void mostrarDetallesEvento(Evento evento) {
+        if (evento != null) {
+            Detalles_Evento detallesEvento = new Detalles_Evento();
+            detallesEvento.setNombreEvento(evento.getNombreEvento());
+            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
+            detallesEvento.setPoster(evento.getPoster());
+            detallesEvento.setHora(evento.getHora());
+            detallesEvento.setFecha(evento.getFecha());
+            detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
+            detallesEvento.setVisible(true);
+            detallesEvento.setLocationRelativeTo(null);
+        }
+    }
+
+    private void timerSliderImagenes() {
+        // Crea un nuevo ActionListener para manejar los eventos del temporizador
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imgIndex++;
+                if (imgIndex >= imgList.size()) {
+                    imgIndex = 0;
+                }
+                showImage(imgIndex);
+            }
+        };
+        timer = new Timer(TIEMPO_DE_ESPERA, actionListener);
+        timer.start();
+    }
+
     public ArrayList<byte[]> getImagesList() {
         ArrayList<byte[]> imgList = new ArrayList<>();
         Connection cn = Conexion.conectar();
@@ -773,7 +796,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     public void mostrarInformacionEvento(Evento evento) {
         if (evento != null) {
             labelTitulo.setText(evento.getNombreEvento());
-            labelDescripcion.setText(evento.getDescripcionEvento());
+            labelDescripcion.setText("<html>" + evento.getDescripcionEvento() + "<html>");
             labelFecha.setText(evento.getFecha());
             labelHora.setText(evento.getHora());
             labelDireccion.setText(evento.getDireccion());
@@ -809,9 +832,6 @@ public class Menu_Principal extends javax.swing.JFrame {
     private void initTabla() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setRowCount(0);
-        tabla.setDefaultRenderer(Object.class, new RenderTabla());
-
-        JButton bt1 = new JButton("Ver Detalles");
 
         Connection cn = Conexion.conectar();
         try {
@@ -821,7 +841,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 String nombreEvento = rs.getString("nombre_evento");
                 String descripcionEvento = rs.getString("descripcion_evento");
                 byte[] poster = rs.getBytes("poster");
-                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster, bt1});
+                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster});
             }
             cn.close();
         } catch (SQLException ex) {
@@ -831,10 +851,10 @@ public class Menu_Principal extends javax.swing.JFrame {
         // Establecer el renderizador de celdas para la columna del póster
         tabla.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
         // Establecer la altura de las filas para que el póster se muestre más grande
-        tabla.setRowHeight(130); // Ajustar la altura de las filas para adaptarse al tamaño del póster
+        tabla.setRowHeight(240); // Ajustar la altura de las filas para adaptarse al tamaño del póster
 
         // Establecer el estilo de la fuente para el título y la descripción
-        tabla.setFont(new Font("Arial", Font.BOLD, 12)); // Establecer la fuente en negrita con tamaño de 12 puntos
+        tabla.setFont(new Font("Arial", Font.BOLD, 14)); // Establecer la fuente en negrita con tamaño de 12 puntos
     }
 
 // Clase interna para renderizar las celdas de la columna del póster como imágenes
@@ -852,7 +872,7 @@ public class Menu_Principal extends javax.swing.JFrame {
             if (value != null) {
                 // Escalar la imagen al tamaño deseado
                 ImageIcon icon = new ImageIcon((byte[]) value);
-                Image image = icon.getImage().getScaledInstance(90, 130, Image.SCALE_SMOOTH);
+                Image image = icon.getImage().getScaledInstance(180, 240, Image.SCALE_SMOOTH);
                 label.setIcon(new ImageIcon(image)); // Convierte el valor a un ImageIcon y lo establece en el JLabel
             } else {
                 label.setIcon(null);

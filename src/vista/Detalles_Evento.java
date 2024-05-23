@@ -250,7 +250,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
     }
 
     public void setDescripcionEvento(String descripcion) {
-        labelDescripcion.setText(descripcion);
+        labelDescripcion.setText("<html>"+descripcion+"<html>");
     }
     
     public void setHora(String descripcion) {
