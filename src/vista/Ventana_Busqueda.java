@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -366,10 +368,40 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
             detallesEvento.setHora(evento.getHora());
             detallesEvento.setFecha(evento.getFecha());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
+            // Obtener el ID del evento
+            int idEvento = evento.getIdEvento();
+
+            // Obtener las localidades del evento
+            List<String> localidades = obtenerLocalidadesEvento(idEvento);
+
+            // Cargar las localidades en el JComboBox
+            for (String localidad : localidades) {
+                detallesEvento.getComboBoxLocalidades().addItem(localidad);
+            }
             detallesEvento.setVisible(true);
             detallesEvento.setLocationRelativeTo(null);
             
         }
+    }
+    
+     private List<String> obtenerLocalidadesEvento(int idEvento) {
+        List<String> localidades = new ArrayList<>();
+        java.sql.Connection conexion = Conexion.conectar();
+        String consulta = "SELECT tipo_localidad, precio FROM Localidades WHERE id_evento = ?";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setInt(1, idEvento);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String nombreLocalidad = rs.getString("tipo_localidad");
+                double precio = rs.getDouble("precio");
+                localidades.add(nombreLocalidad + " - Precio: $" + precio); // Agrega el nombre de la localidad y su precio al ArrayList
+            }
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener localidades del evento: " + e.getMessage());
+        }
+        return localidades;
     }
 
 }
