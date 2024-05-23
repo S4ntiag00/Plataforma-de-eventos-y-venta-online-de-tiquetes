@@ -73,7 +73,7 @@ CREATE TABLE Pagos (
 
 
 -- Insertar datos en la tabla Usuarios
-INSERT INTO Usuarios (correo_electronico, contrasena, nombre, apellido, documento_identificacion, teléfono, genero, fecha_nacimiento)
+INSERT INTO Usuarios (correo_electronico, contrasena, nombre, apellido, documento_identificacion, telefono, genero, fecha_nacimiento)
 VALUES 
 ('1', '1', 'Jhon', 'Osma', '12345678', '3333333333', 'Masculino', '2004-06-27');
 
