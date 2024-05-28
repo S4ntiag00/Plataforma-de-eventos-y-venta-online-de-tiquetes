@@ -36,7 +36,8 @@ CREATE TABLE Eventos (
     direccion VARCHAR NOT NULL,
     poster BYTEA,
     id_categoria INTEGER REFERENCES Categorias(id_categoria),
-    id_artista INTEGER REFERENCES Artistas(id_artista)
+    id_artista INTEGER REFERENCES Artistas(id_artista),
+    id_usuario INTEGER REFERENCE  Usuarios(id_usuario)
 );
 
 -- Creación de la tabla Localidades

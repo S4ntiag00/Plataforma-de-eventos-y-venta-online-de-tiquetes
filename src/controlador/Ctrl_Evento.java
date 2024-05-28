@@ -13,7 +13,7 @@ public class Ctrl_Evento {
 
     public int guardarEvento(Evento evento) {
         int idEvento = -1;
-        String sql = "INSERT INTO eventos (nombre_evento, descripcion_evento, fecha, hora, direccion, poster, id_categoria, id_artista) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_evento;";
+        String sql = "INSERT INTO eventos (nombre_evento, descripcion_evento, fecha, hora, direccion, poster, id_categoria, id_artista , id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id_evento;";
 
         try (Connection cn = Conexion.conectar(); PreparedStatement pstmt = cn.prepareStatement(sql)) {
 
@@ -25,6 +25,7 @@ public class Ctrl_Evento {
             pstmt.setBytes(6, evento.getPoster());
             pstmt.setInt(7, evento.getIdCategoria());
             pstmt.setInt(8, evento.getIdArtista());
+            pstmt.setInt(9, evento.getIdUsuario());
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -54,6 +55,7 @@ public class Ctrl_Evento {
                 evento.setPoster(rs.getBytes("poster"));
                 evento.setIdCategoria(rs.getInt("id_categoria"));
                 evento.setIdArtista(rs.getInt("id_artista"));
+                evento.setIdUsuario(rs.getInt("id_usuario"));
 
                 eventos.add(evento);
             }
@@ -81,7 +83,6 @@ public class Ctrl_Evento {
             }
         } catch (SQLException e) {
             System.out.println("Error al eliminar evento: " + e.getMessage());
-            e.printStackTrace();
         }
         return respuesta;
     }
@@ -112,7 +113,6 @@ public class Ctrl_Evento {
             }
         } catch (SQLException e) {
             System.out.println("Error al actualizar evento: " + e.getMessage());
-            e.printStackTrace();
         }
         return respuesta;
     }
@@ -126,13 +126,11 @@ public class Ctrl_Evento {
             consulta.setString(1, nombreEvento);
             try (ResultSet rs = consulta.executeQuery()) {
                 if (rs.next()) {
-                    // Si el ResultSet tiene al menos una fila, el evento existe
                     existe = true;
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al verificar si existe el evento: " + e.getMessage());
-            e.printStackTrace();
         }
         return existe;
     }

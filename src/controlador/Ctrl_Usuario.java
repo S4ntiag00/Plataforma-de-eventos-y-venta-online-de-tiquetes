@@ -12,6 +12,8 @@ import modelo.Usuario;
 
 public class Ctrl_Usuario {
 
+    private static Usuario usuarioActivo = null;
+
     // Método para guardar un nuevo usuario
     public boolean guardarUsuario(Usuario usuario) {
         boolean respuesta = false;
@@ -49,6 +51,53 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
+    public Usuario ingresoUsuario(String email, String password) {
+        Connection cn = Conexion.conectar();
+        Usuario usuario = null;
+
+        try {
+            String query = "SELECT * FROM Usuarios WHERE correo_electronico = ? AND contrasena = ?";
+            PreparedStatement consulta = cn.prepareStatement(query);
+            consulta.setString(1, email);
+            consulta.setString(2, password);
+            ResultSet rs = consulta.executeQuery();
+
+            if (rs.next()) {
+                int idUsuario = rs.getInt("id_usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String documentoIdentificacion = rs.getString("documento_identificacion");
+                String genero = rs.getString("genero");
+                String telefono = rs.getString("telefono");
+                Date fechaNacimiento = rs.getDate("fecha_nacimiento");
+
+                usuario = new Usuario(idUsuario, email, password, nombre, apellido, documentoIdentificacion, genero, telefono, fechaNacimiento);
+                usuarioActivo = usuario;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al validar usuario: " + e.getMessage());
+        } finally {
+            try {
+                if (cn != null && !cn.isClosed()) {
+                    cn.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return usuario;
+    }
+
+    // Método para obtener el usuario actual logueado
+    public static Usuario obtenerUsuarioActivo() {
+        return usuarioActivo;
+    }
+
+    // Método para cerrar sesión
+    public static void cerrarSeccion() {
+        usuarioActivo = null;
+    }
+
     // Método para obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -84,103 +133,5 @@ public class Ctrl_Usuario {
 
         return usuarios;
     }
-
-//    public boolean eliminarUsuario(int idUsuario) {
-//        boolean respuesta = false;
-//        Connection cn = Conexion.conectar();
-//
-//        try {
-//            PreparedStatement consulta = cn.prepareStatement("DELETE FROM Usuarios WHERE id_usuario = ?");
-//            consulta.setInt(1, idUsuario);
-//
-//            respuesta = consulta.executeUpdate() > 0;
-//
-//            if (respuesta) {
-//                System.out.println("Usuario eliminado correctamente: " + idUsuario);
-//            } else {
-//                System.out.println("No se pudo eliminar el usuario: " + idUsuario);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error al eliminar usuario: " + e.getMessage());
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (cn != null && !cn.isClosed()) {
-//                    cn.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return respuesta;
-//    }
-//    // Método para actualizar un usuario
-//    public boolean actualizarUsuario(Usuario usuario) {
-//        boolean respuesta = false;
-//        Connection cn = Conexion.conectar();
-//
-//        try {
-//            PreparedStatement consulta = cn.prepareStatement("UPDATE Usuarios SET nombre = ?, apellido = ?, email = ?, contraseña = ?, telefono = ?, tarjeta_identidad = ? WHERE id_usuario = ?");
-//            consulta.setString(1, usuario.getNombre());
-//            consulta.setString(2, usuario.getApellido());
-//            consulta.setString(3, usuario.getCorreoElectronico());
-//            consulta.setString(4, usuario.getContrasena());
-//            consulta.setString(5, usuario.getTelefono());
-//            consulta.setString(6, usuario.getDocumentoIdentificacion());
-//            consulta.setInt(7, usuario.getIdUsuario());
-//
-//            respuesta = consulta.executeUpdate() > 0;
-//
-//            if (respuesta) {
-//                System.out.println("Usuario actualizado correctamente: " + usuario.getNombre());
-//            } else {
-//                System.out.println("No se pudo actualizar el usuario: " + usuario.getNombre());
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error al actualizar usuario: " + e.getMessage());
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (cn != null && !cn.isClosed()) {
-//                    cn.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return respuesta;
-//    }
-    
-    public boolean iniciarSesion(Usuario usuario) {
-        boolean inicioSesionExitoso = false;
-        Connection cn = Conexion.conectar();
-
-        try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT correo_electronico, contrasena FROM Usuarios WHERE correo_electronico = ? AND contrasena = ?");
-            System.out.println("Correo ingresado: " + usuario.getCorreoElectronico());
-            System.out.println("Contraseña ingresada: " + usuario.getContrasena());
-            consulta.setString(1, usuario.getCorreoElectronico());
-            consulta.setString(2, usuario.getContrasena());
-            ResultSet rs = consulta.executeQuery();
-
-            // Verificar si se encontró alguna coincidencia en la base de datos
-            inicioSesionExitoso = rs.next();
-        } catch (SQLException e) {
-            System.out.println("Error al iniciar sesión: " + e.getMessage());
-        } finally {
-            try {
-                if (cn != null && !cn.isClosed()) {
-                    cn.close();
-                }
-            } catch (SQLException e) {
-            }
-        }
-
-        return inicioSesionExitoso;
-    }
-
-    
 
 }

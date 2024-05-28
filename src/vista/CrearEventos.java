@@ -4,6 +4,7 @@ import controlador.Ctrl_Artista;
 import controlador.Ctrl_Categoria;
 import controlador.Ctrl_Evento;
 import controlador.Ctrl_Localidades;
+import controlador.Ctrl_Usuario;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import modelo.Artista;
 import modelo.Categoria;
 import modelo.Evento;
 import modelo.Localidad;
+import modelo.Usuario;
 
 
 /**
@@ -381,6 +383,7 @@ public class CrearEventos extends javax.swing.JFrame {
             nuevoEvento.setPoster(fis); // Establecer la imagen seleccionada
             nuevoEvento.setIdArtista(idArtista);
             nuevoEvento.setIdCategoria(idCategoria);
+            nuevoEvento.setIdUsuario(Ctrl_Usuario.obtenerUsuarioActivo().getIdUsuario());
 
             // Guardar el evento
             int idEvento = controlEvento.guardarEvento(nuevoEvento);

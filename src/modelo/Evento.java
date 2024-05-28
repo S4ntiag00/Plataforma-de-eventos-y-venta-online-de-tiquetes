@@ -13,11 +13,12 @@ public class Evento {
     private byte[] poster;
     private int idCategoria;
     private int idArtista;
+    private int idUsuario;
 
     public Evento() {
     }
 
-    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, String direccion, byte[] poster, int idCategoria, int idArtista) {
+    public Evento(int idEvento, String nombreEvento, String descripcionEvento, String fecha, String hora, String direccion, byte[] poster, int idCategoria, int idArtista, int idUsuario) {
         this.idEvento = idEvento;
         this.nombreEvento = nombreEvento;
         this.descripcionEvento = descripcionEvento;
@@ -27,6 +28,7 @@ public class Evento {
         this.poster = poster;
         this.idCategoria = idCategoria;
         this.idArtista = idArtista;
+        this.idUsuario = idUsuario;
     }
 
     public int getIdEvento() {
@@ -100,6 +102,15 @@ public class Evento {
     public void setIdArtista(int idArtista) {
         this.idArtista = idArtista;
     }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     
     
 }
