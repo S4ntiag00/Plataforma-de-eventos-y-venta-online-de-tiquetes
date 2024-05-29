@@ -1,15 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
-import conexion.Conexion;
+import controlador.Ctrl_Localidades;
+import controlador.Ctrl_Pagos;
+import controlador.Ctrl_Reservas;
+import controlador.Ctrl_Usuario;
 import java.awt.Image;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import modelo.Evento;
+import javax.swing.JOptionPane;
 import modelo.Localidad;
+import modelo.Pago;
+import modelo.Reserva;
+import modelo.Usuario;
 
 /**
  *
@@ -20,8 +27,13 @@ public class Detalles_Evento extends javax.swing.JFrame {
     /**
      * Creates new form Detalles_Evento
      */
-    public Detalles_Evento() {
+    private int idEventoActivo;
+
+    public Detalles_Evento(int idEvento) {
+        this.idEventoActivo = idEvento;
         initComponents();
+        cargarLocalidades(); // Cargar las localidades del evento seleccionado
+
     }
 
     /**
@@ -47,22 +59,26 @@ public class Detalles_Evento extends javax.swing.JFrame {
         jLabel7F2 = new javax.swing.JLabel();
         labelNombreArtista = new javax.swing.JLabel();
         labelEspecialidadArtista = new javax.swing.JLabel();
-        comboBoxLocalidades = new javax.swing.JComboBox<>();
-        campoCantidadTicket = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        LabelValorTotal = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        comboBoxLocalidades = new javax.swing.JComboBox<>();
+        campoCantidadTicket = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        LabelValorTotal = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        BotonComprar = new javax.swing.JButton();
+        BotonReservar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         labelPoster.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -106,31 +122,6 @@ public class Detalles_Evento extends javax.swing.JFrame {
         labelEspecialidadArtista.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelEspecialidadArtista.setText("Especialidad");
 
-        comboBoxLocalidades.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxLocalidadesActionPerformed(evt);
-            }
-        });
-
-        campoCantidadTicket.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        campoCantidadTicket.setText("1");
-
-        jButton3.setText("-");
-
-        jButton4.setText("+");
-
-        jLabel1.setText("TOTAL:");
-
-        jLabel2.setText("TICKET:");
-
-        jLabel3.setText("CANT:");
-
-        LabelValorTotal.setText("500000");
-
-        jLabel5.setText("130000");
-
-        jLabel7.setText("2");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,16 +130,13 @@ public class Detalles_Evento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelPoster, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(173, 173, 173))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -161,96 +149,52 @@ public class Detalles_Evento extends javax.swing.JFrame {
                                 .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(258, 258, 258)
-                                                .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(299, 299, 299)
-                                                .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(197, 197, 197)
-                                                .addComponent(jLabel7F2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(labelNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(labelEspecialidadArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(42, 42, 42)
-                                                .addComponent(comboBoxLocalidades, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(27, 27, 27)
-                                                .addComponent(campoCantidadTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(53, 53, 53)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(6, 6, 6)
-                                                        .addComponent(jLabel2)))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel3)
-                                        .addGap(85, 85, 85)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LabelValorTotal)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel7))
-                                .addGap(82, 82, 82))))))
+                                        .addGap(258, 258, 258)
+                                        .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(299, 299, 299)
+                                        .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(197, 197, 197)
+                                        .addComponent(jLabel7F2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelEspecialidadArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7F1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7F2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEspecialidadArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7F, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7F1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboBoxLocalidades, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoCantidadTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4))
-                        .addGap(82, 82, 82))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(LabelValorTotal)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3))
-                        .addGap(60, 60, 60))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelPoster, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7F2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelEspecialidadArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelPoster, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton1.setText("Menu Principal");
@@ -267,6 +211,144 @@ public class Detalles_Evento extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        comboBoxLocalidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxLocalidadesActionPerformed(evt);
+            }
+        });
+
+        campoCantidadTicket.setEditable(false);
+        campoCantidadTicket.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        campoCantidadTicket.setText("1");
+        campoCantidadTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCantidadTicketActionPerformed(evt);
+            }
+        });
+        campoCantidadTicket.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoCantidadTicketKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campoCantidadTicketKeyReleased(evt);
+            }
+        });
+
+        jButton4.setText("+");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("-");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel1.setText("TOTAL:");
+
+        LabelValorTotal.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        LabelValorTotal.setText("0");
+
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel2.setText("TICKET:");
+
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel5.setText("0");
+
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel3.setText("CANTIDAD:");
+
+        jLabel7.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel7.setText("0");
+
+        BotonComprar.setText("COMPRAR");
+        BotonComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonComprarActionPerformed(evt);
+            }
+        });
+
+        BotonReservar.setText("RESERVAR");
+        BotonReservar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonReservarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(206, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoCantidadTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxLocalidades, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(145, 145, 145)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(50, 50, 50)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(LabelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(151, 151, 151)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotonReservar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(202, 202, 202))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(comboBoxLocalidades, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelValorTotal))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(BotonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(campoCantidadTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel7)
+                        .addComponent(jButton3))
+                    .addComponent(BotonReservar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -274,13 +356,17 @@ public class Detalles_Evento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -290,16 +376,21 @@ public class Detalles_Evento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    Login login = new Login();
+    login.setVisible(true);
+    login.setLocationRelativeTo(null); 
+    this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -309,14 +400,160 @@ public class Detalles_Evento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboBoxLocalidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLocalidadesActionPerformed
-
+        actualizarInfoDesdeComboBox();
     }//GEN-LAST:event_comboBoxLocalidadesActionPerformed
+
+    private void BotonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonReservarActionPerformed
+        // Obtener el usuario activo
+        Ctrl_Usuario ctrlUsuario = new Ctrl_Usuario();
+        Ctrl_Localidades ctrlloc = new Ctrl_Localidades();
+        Usuario usuarioActivo = ctrlUsuario.obtenerUsuarioActivo();
+        Ctrl_Reservas cr = new Ctrl_Reservas();
+
+        if (usuarioActivo != null) {
+            // Obtener los valores seleccionados
+            int idUsuario = usuarioActivo.getIdUsuario();
+            int idEvento = idEventoActivo;
+            int cantidadTiquetes = Integer.parseInt(campoCantidadTicket.getText());
+            // Obtener la localidad seleccionada en el combo box
+            String localidadSeleccionada = comboBoxLocalidades.getSelectedItem().toString();
+
+            // Obtener el ID de la localidad seleccionada
+            int idLocalidad = ctrlloc.obtenerIdLocalidadSeleccionada(localidadSeleccionada);
+
+            // Llamar al método para hacer la reserva
+            cr.hacerReserva(idEvento, idUsuario, idLocalidad, cantidadTiquetes);
+        } else {
+            // Mostrar un mensaje de error si no hay usuario activo
+            JOptionPane.showMessageDialog(null, "No hay un usuario activo. Por favor inicie sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BotonReservarActionPerformed
+
+    private void BotonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonComprarActionPerformed
+        // Obtener el usuario activo
+        Ctrl_Usuario ctrlUsuario = new Ctrl_Usuario();
+        Usuario usuarioActivo = ctrlUsuario.obtenerUsuarioActivo();
+
+        if (usuarioActivo != null) {
+            // Obtener los valores seleccionados
+            int idUsuario = usuarioActivo.getIdUsuario();
+            int idEvento = idEventoActivo;
+            Ctrl_Localidades ctrlloc = new Ctrl_Localidades();
+
+            // Obtener la localidad seleccionada en el combo box
+            String localidadSeleccionada = comboBoxLocalidades.getSelectedItem().toString();
+
+            // Dividir el texto para obtener los valores individuales
+            String[] partes = localidadSeleccionada.split(" - ");
+
+            // Verificar si el array tiene el tamaño esperado
+            if (partes.length == 4) {
+                String tipoLocalidad = partes[1].trim();
+                float precio = Float.parseFloat(partes[2].split(": ")[1].replace(",", ".")); // Reemplazar "," por "." para el formato de punto flotante
+                int espaciosDisponibles = Integer.parseInt(partes[3].split(": ")[1]);
+
+                // Obtener la cantidad de boletos a comprar
+                int cantidadBoletos = Integer.parseInt(campoCantidadTicket.getText());
+
+                // Calcular el monto total
+                float montoTotal = precio * cantidadBoletos;
+
+                // Realizar la reserva
+                Ctrl_Reservas ctrlReservas = new Ctrl_Reservas();
+                int idLocalidad = ctrlloc.obtenerIdLocalidadSeleccionada(localidadSeleccionada);
+                boolean reservaExitosa = ctrlReservas.hacerReserva(idEvento, idUsuario, idLocalidad, cantidadBoletos);
+
+                // Si la reserva fue exitosa, realizar el pago
+                if (reservaExitosa) {
+                    // Crear el objeto Pago
+                    Pago pago = new Pago();
+                    pago.setMetodoPago("Tarjeta de Crédito"); // Método de pago
+                    pago.setEstadoPago("Pagada"); // Estado de pago
+                    pago.setMontoTotal(montoTotal);
+                    pago.setFechaPago(LocalDate.now().toString());
+                    pago.setHoraPago(LocalTime.now().toString());
+                    pago.setReservaId(ctrlReservas.obtenerUltimaReservaId()); // Obtener el ID de la última reserva realizada
+
+                    // Realizar el pago
+                    Ctrl_Pagos ctrlPagos = new Ctrl_Pagos();
+                    boolean pagoExitoso = ctrlPagos.crearPago(pago);
+
+                    // Mostrar mensaje de éxito o error
+                    if (pagoExitoso) {
+                        JOptionPane.showMessageDialog(null, "Reserva realizada y pago completado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al realizar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al realizar la reserva.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                // Mostrar un mensaje de error si el formato es incorrecto
+                JOptionPane.showMessageDialog(null, "Error en el formato de la localidad seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Mostrar un mensaje de error si no hay usuario activo
+            JOptionPane.showMessageDialog(null, "No hay un usuario activo. Por favor inicie sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BotonComprarActionPerformed
+
+    private void campoCantidadTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCantidadTicketActionPerformed
+
+
+    }//GEN-LAST:event_campoCantidadTicketActionPerformed
+
+    private void campoCantidadTicketKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCantidadTicketKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCantidadTicketKeyPressed
+
+    private void campoCantidadTicketKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCantidadTicketKeyReleased
+        actualizarInfoDesdeComboBox();  // TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCantidadTicketKeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // Obtener el valor actual del JTextField
+        String texto = campoCantidadTicket.getText();
+
+        // Convertir el valor a un entero
+        int valorActual = Integer.parseInt(texto);
+
+        // Incrementar el valor en 1
+        int nuevoValor = valorActual + 1;
+
+        // Actualizar el JTextField con el nuevo valor
+        campoCantidadTicket.setText(Integer.toString(nuevoValor));        // TODO add your handling code here:
+        actualizarInfoDesdeComboBox();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Obtener el valor actual del JTextField
+        String texto = campoCantidadTicket.getText();
+
+        // Convertir el valor a un entero
+        int valorActual = Integer.parseInt(texto);
+
+        // Decrementar el valor en 1
+        int nuevoValor = valorActual - 1;
+
+        // Verificar si el nuevo valor es menor que 0
+        if (nuevoValor < 0) {
+            // Si es menor que 0, establecer el valor en 0
+            nuevoValor = 0;
+        }
+
+        // Actualizar el JTextField con el nuevo valor
+        campoCantidadTicket.setText(Integer.toString(nuevoValor));
+        actualizarInfoDesdeComboBox();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonComprar;
+    private javax.swing.JButton BotonReservar;
     private javax.swing.JLabel LabelValorTotal;
     private javax.swing.JTextField campoCantidadTicket;
     private javax.swing.JComboBox<String> comboBoxLocalidades;
@@ -334,6 +571,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7F1;
     private javax.swing.JLabel jLabel7F2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelDescripcion;
     private javax.swing.JLabel labelDireccion;
     private javax.swing.JLabel labelEspecialidadArtista;
@@ -344,8 +582,6 @@ public class Detalles_Evento extends javax.swing.JFrame {
     private javax.swing.JLabel labelPoster;
     private javax.swing.JLabel labelTitulo;
     // End of variables declaration//GEN-END:variables
-
-    
 
     public void setNombreEvento(String nombre) {
         labelTitulo.setText(nombre);
@@ -368,8 +604,63 @@ public class Detalles_Evento extends javax.swing.JFrame {
         Image imagen = icono.getImage().getScaledInstance(labelPoster.getWidth(), labelPoster.getHeight(), Image.SCALE_SMOOTH);
         labelPoster.setIcon(new ImageIcon(imagen));
     }
-    
-    public JComboBox<String> getComboBoxLocalidades() {
-        return comboBoxLocalidades;
+
+    public void setIDEvento(int idEvento) {
+        idEventoActivo = idEvento;
+    }
+
+    private void cargarLocalidades() {
+        Ctrl_Localidades ctrlLocalidades = new Ctrl_Localidades();
+        List<Localidad> localidades = ctrlLocalidades.cargarLocalidades(this.idEventoActivo);
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Localidad localidad : localidades) {
+            String item = String.format("%d - %s - Precio: %.2f - Cantidad: %d",
+                    localidad.getIdLocalidad(),
+                    localidad.getTipoLocalidad(),
+                    localidad.getPrecio(),
+                    localidad.getEspaciosDisponibles());
+            model.addElement(item);
+        }
+        comboBoxLocalidades.setModel(model);
+    }
+
+    public int obtenerIdLocalidadSeleccionada(String textoSeleccionado) {
+        // Dividir el texto para obtener el ID de la localidad
+        String[] partes = textoSeleccionado.split(" - ");
+        int idLocalidad = Integer.parseInt(partes[0]);
+        return idLocalidad;
+    }
+
+    public void actualizarInfoDesdeComboBox() {
+        // Obtener la selección actual del combo box
+        String seleccion = (String) comboBoxLocalidades.getSelectedItem();
+
+        // Dividir el texto para obtener los valores individuales
+        String[] partes = seleccion.split(" - ");
+
+        // Verificar si el array tiene el tamaño esperado
+        if (partes.length == 4) {
+            // Obtener el precio y la cantidad de la selección
+            float precioLocalidad = Float.parseFloat(partes[2].split(": ")[1].replace(",", "."));
+            int cantidadDisponible = Integer.parseInt(partes[3].split(": ")[1]);
+
+            // Actualizar los JLabels con la información obtenida
+            jLabel5.setText(String.format("%.2f", precioLocalidad));
+
+            // Obtener la cantidad de boletos a comprar
+            String cantidadBoletosTexto = campoCantidadTicket.getText();
+            int cantidadBoletos = 0;
+            if (!cantidadBoletosTexto.isEmpty()) {
+                cantidadBoletos = Integer.parseInt(cantidadBoletosTexto);
+            }
+
+            // Actualizar el JLabel con la cantidad de boletos
+            jLabel7.setText(String.valueOf(cantidadBoletos));
+
+            // Calcular el monto total
+            float montoTotal = precioLocalidad * cantidadBoletos;
+            LabelValorTotal.setText(String.format("%.2f", montoTotal));
+        }
     }
 }

@@ -6,7 +6,9 @@ package vista;
 
 import conexion.Conexion;
 import controlador.Ctrl_Artista;
+import controlador.Ctrl_Localidades;
 import controlador.Ctrl_Usuario;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
@@ -19,9 +21,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -104,8 +109,6 @@ public class Menu_Principal extends javax.swing.JFrame {
         jLabel7F2 = new javax.swing.JLabel();
         labelNombreArtista = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         Txt_buscarEvento = new javax.swing.JTextField();
@@ -118,8 +121,12 @@ public class Menu_Principal extends javax.swing.JFrame {
         botonVerReservas = new javax.swing.JButton();
         botonVertusEventos = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaMenu = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setViewportView(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -281,141 +288,6 @@ public class Menu_Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Byte.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabla.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        tabla.setShowGrid(false);
-        tabla.setVerifyInputWhenFocusTarget(false);
-        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tabla);
-        if (tabla.getColumnModel().getColumnCount() > 0) {
-            tabla.getColumnModel().getColumn(2).setResizable(false);
-        }
-
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei", 1, 36)); // NOI18N
         jLabel2.setText("TU EVENTO");
         jLabel2.setToolTipText("");
@@ -472,46 +344,86 @@ public class Menu_Principal extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        tablaMenu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "", "", "", "", ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMenuMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tablaMenu);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jButton2)))
-                                    .addGap(629, 629, 629)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(Txt_buscarEvento)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(botonVertusEventos)
-                                            .addGap(3, 3, 3)
-                                            .addComponent(botonVerReservas)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(botonVerTickets)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addComponent(jScrollPane2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton2)))
+                                .addGap(629, 629, 629)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Txt_buscarEvento)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(botonVertusEventos)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(botonVerReservas)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(botonVerTickets)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(637, 637, 637)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(652, 652, 652)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,14 +446,14 @@ public class Menu_Principal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 3649, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -551,13 +463,14 @@ public class Menu_Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1422, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1445, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -614,21 +527,6 @@ public class Menu_Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        int row = tabla.getSelectedRow();
-        if (row != -1) {
-
-            // Consultar la base de datos para obtener los detalles del evento seleccionado
-            Evento eventoSeleccionado = obtenerEventoPorFila(row);
-
-            // Mostrar los detalles del evento en la nueva ventana
-            if (eventoSeleccionado != null) {
-                mostrarDetallesEvento(eventoSeleccionado);
-                this.dispose();
-            }
-        }
-    }//GEN-LAST:event_tablaMouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         textoBusqueda = Txt_buscarEvento.getText().trim();
@@ -668,6 +566,21 @@ public class Menu_Principal extends javax.swing.JFrame {
         Menu_Principal mn = new Menu_Principal();
         mn.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tablaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMenuMouseClicked
+        int row = tablaMenu.getSelectedRow();
+        if (row != -1) {
+
+            // Consultar la base de datos para obtener los detalles del evento seleccionado
+            Evento eventoSeleccionado = obtenerEventoPorFila(row);
+
+            // Mostrar los detalles del evento en la nueva ventana
+            if (eventoSeleccionado != null) {
+                mostrarDetallesEvento(eventoSeleccionado);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_tablaMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -728,7 +641,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -740,7 +653,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelHora;
     private javax.swing.JLabel labelNombreArtista;
     private javax.swing.JLabel labelTitulo;
-    public static javax.swing.JTable tabla;
+    private javax.swing.JTable tablaMenu;
     // End of variables declaration//GEN-END:variables
 
     private Evento obtenerEventoPorFila(int fila) {
@@ -800,46 +713,19 @@ public class Menu_Principal extends javax.swing.JFrame {
 
     private void mostrarDetallesEvento(Evento evento) {
         if (evento != null) {
-            Detalles_Evento detallesEvento = new Detalles_Evento();
+            int idEvento = evento.getIdEvento();
+            Detalles_Evento detallesEvento = new Detalles_Evento(idEvento); // Pasar idEvento al constructor
+
             detallesEvento.setNombreEvento(evento.getNombreEvento());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
             detallesEvento.setPoster(evento.getPoster());
             detallesEvento.setHora(evento.getHora());
             detallesEvento.setFecha(evento.getFecha());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
-            // Obtener el ID del evento
-            int idEvento = evento.getIdEvento();
 
-            // Obtener las localidades del evento
-            List<String> localidades = obtenerLocalidadesEvento(idEvento);
-
-            // Cargar las localidades en el JComboBox
-            for (String localidad : localidades) {
-                detallesEvento.getComboBoxLocalidades().addItem(localidad);
-            }
             detallesEvento.setVisible(true);
             detallesEvento.setLocationRelativeTo(null);
         }
-    }
-
-    private List<String> obtenerLocalidadesEvento(int idEvento) {
-        List<String> localidades = new ArrayList<>();
-        java.sql.Connection conexion = Conexion.conectar();
-        String consulta = "SELECT tipo_localidad, precio FROM Localidades WHERE id_evento = ?";
-        try {
-            PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setInt(1, idEvento);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String nombreLocalidad = rs.getString("tipo_localidad");
-                double precio = rs.getDouble("precio");
-                localidades.add(nombreLocalidad + " - Precio: $" + precio); // Agrega el nombre de la localidad y su precio al ArrayList
-            }
-            conexion.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener localidades del evento: " + e.getMessage());
-        }
-        return localidades;
     }
 
     private void timerSliderImagenes() {
@@ -953,18 +839,20 @@ public class Menu_Principal extends javax.swing.JFrame {
     }
 
     private void initTabla() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaMenu.getModel();
         modeloTabla.setRowCount(0);
 
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripcion_evento, poster FROM eventos");
+            PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripcion_evento, fecha, direccion, poster FROM eventos");
             ResultSet rs = consulta.executeQuery();
             while (rs.next()) {
                 String nombreEvento = rs.getString("nombre_evento");
                 String descripcionEvento = rs.getString("descripcion_evento");
+                String fechaEvento = rs.getString("fecha");
+                String direccionEvento = rs.getString("direccion");
                 byte[] poster = rs.getBytes("poster");
-                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster});
+                modeloTabla.addRow(new Object[]{nombreEvento, "<html>" + descripcionEvento + "<html>", fechaEvento, "<html>" + direccionEvento + "<html>", poster});
             }
             cn.close();
         } catch (SQLException ex) {
@@ -972,15 +860,28 @@ public class Menu_Principal extends javax.swing.JFrame {
         }
 
         // Establecer el renderizador de celdas para la columna del póster
-        tabla.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        tablaMenu.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
+
         // Establecer la altura de las filas para que el póster se muestre más grande
-        tabla.setRowHeight(240); // Ajustar la altura de las filas para adaptarse al tamaño del póster
+        tablaMenu.setRowHeight(330); // Ajustar la altura de las filas para adaptarse al tamaño del póster
+
+        // Ajustar el margen entre filas
+        tablaMenu.setRowMargin(10); // Ajustar el margen entre las filas
 
         // Establecer el estilo de la fuente para el título y la descripción
-        tabla.setFont(new Font("Arial", Font.BOLD, 14)); // Establecer la fuente en negrita con tamaño de 12 puntos
+        tablaMenu.setFont(new Font("Arial", Font.BOLD, 14)); // Establecer la fuente en negrita con tamaño de 12 puntos
+
+        // Establecer renderizadores personalizados para la alineación del texto sin padding
+        DefaultTableCellRenderer topAlignedRenderer = new DefaultTableCellRenderer();
+        topAlignedRenderer.setVerticalAlignment(SwingConstants.TOP);
+
+        // Aplicar el renderizador a las columnas necesarias (nombre_evento, descripcion_evento, fecha, direccion)
+        tablaMenu.getColumnModel().getColumn(0).setCellRenderer(topAlignedRenderer);
+        tablaMenu.getColumnModel().getColumn(1).setCellRenderer(topAlignedRenderer);
+        tablaMenu.getColumnModel().getColumn(2).setCellRenderer(topAlignedRenderer);
+        tablaMenu.getColumnModel().getColumn(3).setCellRenderer(topAlignedRenderer);
     }
 
-// Clase interna para renderizar las celdas de la columna del póster como imágenes
     class ImageRenderer extends DefaultTableCellRenderer {
 
         JLabel label;
@@ -995,13 +896,12 @@ public class Menu_Principal extends javax.swing.JFrame {
             if (value != null) {
                 // Escalar la imagen al tamaño deseado
                 ImageIcon icon = new ImageIcon((byte[]) value);
-                Image image = icon.getImage().getScaledInstance(180, 240, Image.SCALE_SMOOTH);
-                label.setIcon(new ImageIcon(image)); // Convierte el valor a un ImageIcon y lo establece en el JLabel
+                Image image = icon.getImage().getScaledInstance(270, 330, Image.SCALE_SMOOTH);
+                label.setIcon(new ImageIcon(image));
             } else {
                 label.setIcon(null);
             }
             return label;
         }
     }
-
 }

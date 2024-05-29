@@ -1,9 +1,11 @@
 package modelo;
+
 /**
  *
  * @author ediso
  */
 public class Localidad {
+
     private int idLocalidad;
     private int idEvento;
     private String tipoLocalidad;
@@ -16,6 +18,13 @@ public class Localidad {
     public Localidad(int idLocalidad, int idEvento, String tipoLocalidad, Float precio, int espaciosDisponibles) {
         this.idLocalidad = idLocalidad;
         this.idEvento = idEvento;
+        this.tipoLocalidad = tipoLocalidad;
+        this.precio = precio;
+        this.espaciosDisponibles = espaciosDisponibles;
+    }
+
+    public Localidad(int idLocalidad, String tipoLocalidad, float precio, int espaciosDisponibles) {
+        this.idLocalidad = idLocalidad;
         this.tipoLocalidad = tipoLocalidad;
         this.precio = precio;
         this.espaciosDisponibles = espaciosDisponibles;
@@ -62,4 +71,9 @@ public class Localidad {
     }
     
     
+    @Override
+    public String toString() {
+        return tipoLocalidad + " - $" + precio + " - Disponibles: " + espaciosDisponibles;
+    }
+
 }
