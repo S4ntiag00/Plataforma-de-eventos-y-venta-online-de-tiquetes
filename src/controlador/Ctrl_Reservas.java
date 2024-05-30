@@ -8,6 +8,7 @@ import java.sql.*;
 import conexion.Conexion;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import modelo.Pago;
 import modelo.Reserva;
 
@@ -87,7 +88,6 @@ public class Ctrl_Reservas {
         }
     }
 
-
     // Método para hacer la reserva
     public boolean hacerReserva(int idEvento, int idUsuario, int idLocalidad, int cantidadTiquetes) {
         boolean reservaExitosa = false;
@@ -102,7 +102,7 @@ public class Ctrl_Reservas {
         // Crear objeto Reserva
         Reserva reserva = new Reserva();
         reserva.setCantidadTiquetes(cantidadTiquetes);
-        reserva.setEstadoReserva("Pagado"); // Cambiamos el estado a "Pagado"
+        reserva.setEstadoReserva("Pendiente");
         reserva.setFechaReserva(fechaReserva);
         reserva.setHoraReserva(horaReserva);
         reserva.setEventoId(idEvento);
@@ -122,13 +122,8 @@ public class Ctrl_Reservas {
             int filasInsertadas = stmt.executeUpdate();
 
             if (filasInsertadas > 0) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int idReservaGenerado = generatedKeys.getInt(1);
-                        System.out.println("Reserva creada exitosamente. ID de reserva: " + idReservaGenerado);
-                        reservaExitosa = true;
-                    }
-                }
+                JOptionPane.showMessageDialog(null, "Reserva Creada Con Exito, Puedes ver mas detalles En 'Ver Reservas' Ó ver sus Tickets en 'Tickets' ", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+                reservaExitosa = true;
             } else {
                 System.out.println("Error al crear la reserva. No se pudo insertar la reserva en la base de datos.");
             }
@@ -152,6 +147,23 @@ public class Ctrl_Reservas {
         }
 
         return idReserva;
+    }
+
+    public boolean actualizarEstadoReserva(int idReserva, String nuevoEstado) {
+        Connection cn = Conexion.conectar();
+        try {
+            String sql = "UPDATE Reservas SET estado_reserva = ? WHERE reserva_id = ?";
+            PreparedStatement consulta = cn.prepareStatement(sql);
+            consulta.setString(1, nuevoEstado);
+            consulta.setInt(2, idReserva);
+
+            int filasAfectadas = consulta.executeUpdate();
+            cn.close();
+            return filasAfectadas > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el estado de la reserva: " + ex.getMessage());
+            return false;
+        }
     }
 
 }

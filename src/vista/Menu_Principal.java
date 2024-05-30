@@ -322,6 +322,11 @@ public class Menu_Principal extends javax.swing.JFrame {
         jLabel13.setText("DESCUBRE MAS");
 
         botonVerTickets.setText("Ver Tickets");
+        botonVerTickets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVerTicketsActionPerformed(evt);
+            }
+        });
 
         botonVerReservas.setText("Ver Reservas");
         botonVerReservas.addActionListener(new java.awt.event.ActionListener() {
@@ -385,11 +390,14 @@ public class Menu_Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(652, 652, 652)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -413,16 +421,11 @@ public class Menu_Principal extends javax.swing.JFrame {
                                         .addComponent(botonVerTickets)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(652, 652, 652)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -557,7 +560,9 @@ public class Menu_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonVertusEventosActionPerformed
 
     private void botonVerReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerReservasActionPerformed
-        // TODO add your handling code here:
+        Ventana_Reservas ve = new Ventana_Reservas();
+        ve.setVisible(true);
+        ve.setLocationRelativeTo(null);
     }//GEN-LAST:event_botonVerReservasActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -581,6 +586,12 @@ public class Menu_Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tablaMenuMouseClicked
+
+    private void botonVerTicketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerTicketsActionPerformed
+        Ventana_Descargas ve = new Ventana_Descargas();
+        ve.setVisible(true);
+        ve.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botonVerTicketsActionPerformed
 
     /**
      * @param args the command line arguments

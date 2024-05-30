@@ -4,6 +4,7 @@ import controlador.Ctrl_Localidades;
 import controlador.Ctrl_Pagos;
 import controlador.Ctrl_Reservas;
 import controlador.Ctrl_Usuario;
+import java.awt.Frame;
 import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import modelo.Localidad;
 import modelo.Pago;
 import modelo.Reserva;
@@ -28,6 +30,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
      * Creates new form Detalles_Evento
      */
     private int idEventoActivo;
+    private String nombreEvento;
 
     public Detalles_Evento(int idEvento) {
         this.idEventoActivo = idEvento;
@@ -222,7 +225,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
 
         campoCantidadTicket.setEditable(false);
         campoCantidadTicket.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        campoCantidadTicket.setText("1");
+        campoCantidadTicket.setText("0");
         campoCantidadTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoCantidadTicketActionPerformed(evt);
@@ -303,15 +306,14 @@ public class Detalles_Evento extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(50, 50, 50)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(LabelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LabelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(151, 151, 151)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BotonReservar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -387,10 +389,10 @@ public class Detalles_Evento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    Login login = new Login();
-    login.setVisible(true);
-    login.setLocationRelativeTo(null); 
-    this.dispose();
+        Login login = new Login();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -430,7 +432,6 @@ public class Detalles_Evento extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonReservarActionPerformed
 
     private void BotonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonComprarActionPerformed
-        // Obtener el usuario activo
         Ctrl_Usuario ctrlUsuario = new Ctrl_Usuario();
         Usuario usuarioActivo = ctrlUsuario.obtenerUsuarioActivo();
 
@@ -449,46 +450,73 @@ public class Detalles_Evento extends javax.swing.JFrame {
             // Verificar si el array tiene el tamaño esperado
             if (partes.length == 4) {
                 String tipoLocalidad = partes[1].trim();
-                float precio = Float.parseFloat(partes[2].split(": ")[1].replace(",", ".")); // Reemplazar "," por "." para el formato de punto flotante
+                float precio = Float.parseFloat(partes[2].split(": ")[1].replace(",", "."));
                 int espaciosDisponibles = Integer.parseInt(partes[3].split(": ")[1]);
 
                 // Obtener la cantidad de boletos a comprar
                 int cantidadBoletos = Integer.parseInt(campoCantidadTicket.getText());
+                if (cantidadBoletos > 0) {
 
-                // Calcular el monto total
-                float montoTotal = precio * cantidadBoletos;
+                    // Calcular el monto total
+                    float montoTotal = precio * cantidadBoletos;
 
-                // Realizar la reserva
-                Ctrl_Reservas ctrlReservas = new Ctrl_Reservas();
-                int idLocalidad = ctrlloc.obtenerIdLocalidadSeleccionada(localidadSeleccionada);
-                boolean reservaExitosa = ctrlReservas.hacerReserva(idEvento, idUsuario, idLocalidad, cantidadBoletos);
+                    // Mostrar la ventana de la pasarela de pago con los datos relevantes
+                    Pasarela_Pagos pasarela = new Pasarela_Pagos(
+                            (Frame) SwingUtilities.getWindowAncestor(this),
+                            montoTotal,
+                            nombreEvento,
+                            LocalDateTime.now().toString(), // Puedes ajustar el formato de fecha y hora según tus necesidades
+                            usuarioActivo.getNombre() + " " + usuarioActivo.getApellido()
+                    );
+                    pasarela.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this)); // Centrar la ventana
+                    pasarela.setVisible(true);
 
-                // Si la reserva fue exitosa, realizar el pago
-                if (reservaExitosa) {
-                    // Crear el objeto Pago
-                    Pago pago = new Pago();
-                    pago.setMetodoPago("Tarjeta de Crédito"); // Método de pago
-                    pago.setEstadoPago("Pagada"); // Estado de pago
-                    pago.setMontoTotal(montoTotal);
-                    pago.setFechaPago(LocalDate.now().toString());
-                    pago.setHoraPago(LocalTime.now().toString());
-                    pago.setReservaId(ctrlReservas.obtenerUltimaReservaId()); // Obtener el ID de la última reserva realizada
+                    if (pasarela.isPagoConfirmado()) {
+                        // Realizar la reserva
+                        Ctrl_Reservas ctrlReservas = new Ctrl_Reservas();
+                        int idLocalidad = ctrlloc.obtenerIdLocalidadSeleccionada(localidadSeleccionada);
+                        boolean reservaExitosa = ctrlReservas.hacerReserva(idEvento, idUsuario, idLocalidad, cantidadBoletos);
 
-                    // Realizar el pago
-                    Ctrl_Pagos ctrlPagos = new Ctrl_Pagos();
-                    boolean pagoExitoso = ctrlPagos.crearPago(pago);
+                        // Si la reserva fue exitosa, obtener el ID de la última reserva y actualizar el estado
+                        if (reservaExitosa) {
+                            int idReserva = ctrlReservas.obtenerUltimaReservaId();
 
-                    // Mostrar mensaje de éxito o error
-                    if (pagoExitoso) {
-                        JOptionPane.showMessageDialog(null, "Reserva realizada y pago completado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            // Crear el objeto Pago
+                            Pago pago = new Pago();
+                            pago.setMetodoPago("Tarjeta de Crédito"); // Método de pago
+                            pago.setEstadoPago("Pagada"); // Estado de pago
+                            pago.setMontoTotal(montoTotal);
+                            pago.setFechaPago(LocalDate.now().toString());
+                            pago.setHoraPago(LocalTime.now().toString());
+                            pago.setReservaId(idReserva);
+
+                            // Realizar el pago
+                            Ctrl_Pagos ctrlPagos = new Ctrl_Pagos();
+                            boolean pagoExitoso = ctrlPagos.crearPago(pago);
+
+                            // Mostrar mensaje de éxito o error
+                            if (pagoExitoso) {
+                                // Actualizar el estado de la reserva a "Pagada"
+                                boolean estadoActualizado = ctrlReservas.actualizarEstadoReserva(idReserva, "Pagada");
+
+                                if (estadoActualizado) {
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Error al actualizar el estado de la reserva.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error al realizar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al realizar la reserva.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al realizar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Compra Cancelada.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al realizar la reserva.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Debes ingresar un valor mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                // Mostrar un mensaje de error si el formato es incorrecto
                 JOptionPane.showMessageDialog(null, "Error en el formato de la localidad seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
@@ -522,7 +550,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
         int nuevoValor = valorActual + 1;
 
         // Actualizar el JTextField con el nuevo valor
-        campoCantidadTicket.setText(Integer.toString(nuevoValor));        // TODO add your handling code here:
+        campoCantidadTicket.setText(Integer.toString(nuevoValor));
         actualizarInfoDesdeComboBox();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -585,6 +613,7 @@ public class Detalles_Evento extends javax.swing.JFrame {
 
     public void setNombreEvento(String nombre) {
         labelTitulo.setText(nombre);
+        nombreEvento = nombre;
     }
 
     public void setDescripcionEvento(String descripcion) {

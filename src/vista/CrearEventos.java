@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Artista;
 import modelo.Categoria;
@@ -449,8 +450,9 @@ public class CrearEventos extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 // Crear una instancia del diálogo AgregarLocalidadDialog
         AgregarLocalidadDialog dialog = new AgregarLocalidadDialog(this, true);
+        dialog.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this)); // Centrar la ventana
         dialog.setVisible(true);
-        dialog.setLocationRelativeTo(null);
+        
 
         // Obtener los datos ingresados por el usuario desde el diálogo
         String nombreLocalidad = dialog.getNombreLocalidad();
