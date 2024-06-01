@@ -5,6 +5,7 @@
 package vista;
 
 import conexion.Conexion;
+import controlador.Ctrl_Artista;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
@@ -20,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import modelo.Artista;
 import modelo.Evento;
 
 /**
@@ -58,116 +61,116 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "", "", ""
+                "", "", "", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -188,6 +191,11 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tabla);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(1).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setResizable(false);
+            tabla.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jButton1.setText("Volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +285,7 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
         Connection cn = Conexion.conectar();
         try {
             PreparedStatement consulta = cn.prepareStatement(
-                    "SELECT eventos.nombre_evento, eventos.descripcion_evento, eventos.poster "
+                    "SELECT eventos.id_evento, eventos.nombre_evento, eventos.descripcion_evento, eventos.poster "
                     + "FROM eventos "
                     + "JOIN categorias ON eventos.id_categoria = categorias.id_categoria "
                     + "WHERE eventos.nombre_evento LIKE ? OR categorias.nombre_categoria LIKE ?"
@@ -287,10 +295,11 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
 
             ResultSet rs = consulta.executeQuery();
             while (rs.next()) {
+                Integer idevento = rs.getInt("id_evento");
                 String nombreEvento = rs.getString("nombre_evento");
                 String descripcionEvento = rs.getString("descripcion_evento");
                 byte[] poster = rs.getBytes("poster");
-                modeloTabla.addRow(new Object[]{nombreEvento, descripcionEvento, poster});
+                modeloTabla.addRow(new Object[]{idevento, nombreEvento, descripcionEvento, poster});
             }
             cn.close();
         } catch (SQLException ex) {
@@ -298,11 +307,9 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
         }
 
         // Establecer el renderizador de celdas para la columna del póster
-        tabla.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        tabla.getColumnModel().getColumn(3).setCellRenderer(new ImageRenderer());
         // Establecer la altura de las filas para que el póster se muestre más grande
         tabla.setRowHeight(240); // Ajustar la altura de las filas para adaptarse al tamaño del póster
-
-        // Establecer el estilo de la fuente para el título y la descripción
         tabla.setFont(new Font("Arial", Font.BOLD, 12)); // Establecer la fuente en negrita con tamaño de 12 puntos
     }
 
@@ -333,16 +340,19 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
     private Evento obtenerEventoPorFila(int fila) {
         Evento evento = null;
         Connection conexion = Conexion.conectar();
-        String consulta = "SELECT * FROM eventos OFFSET ? LIMIT 1";
+        String consulta = "SELECT * FROM eventos WHERE id_evento = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setInt(1, fila);
+            // Obtener el ID del evento en la fila seleccionada
+            int idEvento = (int) tabla.getValueAt(fila, 0); // Suponiendo que la primera columna contiene el ID del evento
+            ps.setInt(1, idEvento);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 evento = new Evento();
                 evento.setIdEvento(rs.getInt("id_evento"));
                 evento.setNombreEvento(rs.getString("nombre_evento"));
                 evento.setDescripcionEvento(rs.getString("descripcion_evento"));
+                evento.setDireccion(rs.getString("direccion"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
                 byte[] bytePoster = rs.getBytes("poster");
@@ -360,12 +370,15 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
         if (evento != null) {
             int idEvento = evento.getIdEvento();
             Detalles_Evento detallesEvento = new Detalles_Evento(idEvento); // Pasar idEvento al constructor
-
+            Artista artista = obtenerArtistaPorID(evento.getIdArtista());
             detallesEvento.setNombreEvento(evento.getNombreEvento());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
             detallesEvento.setPoster(evento.getPoster());
             detallesEvento.setHora(evento.getHora());
+            detallesEvento.setDireccionEvento(evento.getDireccion());
             detallesEvento.setFecha(evento.getFecha());
+            detallesEvento.setArtista(artista.getNombreArtista());
+            detallesEvento.setEspecialidad(artista.getEspecialidad());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
 
             detallesEvento.setVisible(true);
@@ -373,24 +386,15 @@ public class Ventana_Busqueda extends javax.swing.JFrame {
         }
     }
 
-    private List<String> obtenerLocalidadesEvento(int idEvento) {
-        List<String> localidades = new ArrayList<>();
-        java.sql.Connection conexion = Conexion.conectar();
-        String consulta = "SELECT tipo_localidad, precio FROM Localidades WHERE id_evento = ?";
-        try {
-            PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setInt(1, idEvento);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String nombreLocalidad = rs.getString("tipo_localidad");
-                double precio = rs.getDouble("precio");
-                localidades.add(nombreLocalidad + " - Precio: $" + precio); // Agrega el nombre de la localidad y su precio al ArrayList
+    private Artista obtenerArtistaPorID(int idArtista) {
+        Ctrl_Artista ctrlArtista = new Ctrl_Artista();
+        List<Artista> artistas = ctrlArtista.obtenerArtistas();
+        for (Artista artista : artistas) {
+            if (artista.getIdArtista() == idArtista) {
+                return artista;
             }
-            conexion.close();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener localidades del evento: " + e.getMessage());
         }
-        return localidades;
+        return null;
     }
 
 }

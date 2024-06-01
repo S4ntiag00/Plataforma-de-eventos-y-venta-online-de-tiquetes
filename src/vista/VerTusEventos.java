@@ -1,23 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 import conexion.Conexion;
+import controlador.Ctrl_Artista;
+import controlador.Ctrl_Evento;
+import controlador.Ctrl_Localidades;
 import controlador.Ctrl_Usuario;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import modelo.Artista;
+import modelo.Evento;
+import modelo.Localidad;
 
 /**
  *
@@ -28,11 +43,22 @@ public class VerTusEventos extends javax.swing.JFrame {
     /**
      * Creates new form VerTusEventos
      */
-    
+    private byte[] fis;
+    int idEventoSeleccionado;
+    int idLocalidadSeleccionada = -1;
+    private ArrayList<Localidad> listaLocalidades = new ArrayList<>();
+
     public VerTusEventos() {
         initComponents();
         initTabla(Ctrl_Usuario.obtenerUsuarioActivo().getIdUsuario());
-        
+        TextPrompt phn = new TextPrompt("Nombre del Evento ", txt_nombreEvento);
+        TextPrompt phd = new TextPrompt("Descripcion del Evento", txt_descripcionEvento);
+        TextPrompt phfe = new TextPrompt("Fecha del Evento", txt_fecha);
+        TextPrompt phhe = new TextPrompt("Hora del Evento", txt_hora);
+        TextPrompt phde = new TextPrompt("Direccion del Evento", txt_direccion);
+        TextPrompt pha = new TextPrompt("Artista, Grupo, Organizacion", txt_nombreArtista);
+        TextPrompt phe = new TextPrompt("Acto, Especialidad, Campo ", txt_especialidad);
+
     }
 
     /**
@@ -47,25 +73,47 @@ public class VerTusEventos extends javax.swing.JFrame {
         JScroll = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        labelPoster = new javax.swing.JLabel();
+        txt_nombreEvento = new javax.swing.JTextField();
+        txt_hora = new javax.swing.JFormattedTextField();
+        txt_fecha = new javax.swing.JFormattedTextField();
+        txt_descripcionEvento = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txt_direccion = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        txt_nombreArtista = new javax.swing.JTextField();
+        txt_especialidad = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        btonModificar = new javax.swing.JButton();
+        precioLocalidad = new javax.swing.JTextField();
+        cantidadLugares = new javax.swing.JTextField();
+        nombreLocalidad = new javax.swing.JTextField();
+        comboBoxLocalidades1 = new javax.swing.JComboBox<>();
+        btonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Descripcion", "Fecha", "Hora", "Direccion", "Poster"
+                "Id_Evento", "Nombre", "Descripcion", "Fecha", "Hora", "Direccion", "Artista", "Especialidad", "Poster"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Byte.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,38 +124,496 @@ public class VerTusEventos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         JScroll.setViewportView(tabla);
+        if (tabla.getColumnModel().getColumnCount() > 0) {
+            tabla.getColumnModel().getColumn(0).setResizable(false);
+            tabla.getColumnModel().getColumn(1).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setResizable(false);
+            tabla.getColumnModel().getColumn(3).setResizable(false);
+            tabla.getColumnModel().getColumn(4).setResizable(false);
+            tabla.getColumnModel().getColumn(5).setResizable(false);
+            tabla.getColumnModel().getColumn(6).setResizable(false);
+            tabla.getColumnModel().getColumn(7).setResizable(false);
+            tabla.getColumnModel().getColumn(8).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TUS EVENTOS CREADOS");
+        jLabel1.setText("MODIFICA Y VISUALIZA TUS EVENTOS CREADOS");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPoster, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPoster, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        txt_nombreEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nombreEventoActionPerformed(evt);
+            }
+        });
+
+        txt_hora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_horaActionPerformed(evt);
+            }
+        });
+
+        txt_fecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fechaActionPerformed(evt);
+            }
+        });
+
+        txt_descripcionEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_descripcionEventoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Locaciones");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("General");
+
+        txt_direccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_direccionActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Artista");
+
+        txt_nombreArtista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nombreArtistaActionPerformed(evt);
+            }
+        });
+
+        txt_especialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_especialidadActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("SUBIR POSTER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        btonModificar.setText("MODIFICAR EVENTO");
+        btonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btonModificarActionPerformed(evt);
+            }
+        });
+
+        precioLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioLocalidadActionPerformed(evt);
+            }
+        });
+
+        cantidadLugares.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidadLugaresActionPerformed(evt);
+            }
+        });
+
+        nombreLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreLocalidadActionPerformed(evt);
+            }
+        });
+
+        comboBoxLocalidades1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxLocalidades1ActionPerformed(evt);
+            }
+        });
+
+        btonEliminar.setText("ELIMINAR");
+        btonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btonEliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(397, 397, 397))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_hora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_fecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_descripcionEvento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_nombreEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(comboBoxLocalidades1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cantidadLugares, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(precioLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txt_especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(183, 183, 183)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addGap(14, 14, 14)
+                        .addComponent(txt_nombreEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_descripcionEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(5, 5, 5)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nombreLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cantidadLugares, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxLocalidades1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(precioLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_nombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(btonEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(JScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 1189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(JScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JScroll)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_nombreEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreEventoActionPerformed
+
+    }//GEN-LAST:event_txt_nombreEventoActionPerformed
+
+    private void txt_horaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_horaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_horaActionPerformed
+
+    private void txt_fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fechaActionPerformed
+
+    private void txt_descripcionEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_descripcionEventoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_descripcionEventoActionPerformed
+
+    private void txt_direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_direccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_direccionActionPerformed
+
+    private void txt_nombreArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreArtistaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_nombreArtistaActionPerformed
+
+    private void txt_especialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_especialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_especialidadActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+
+        // Filtrar solo archivos de imagen (jpg y png)
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de imagen", "jpg", "png");
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                Image img = ImageIO.read(file);
+                // Reescalar la imagen para que se ajuste al tamaño del JLabel
+                Image scaledImg = img.getScaledInstance(labelPoster.getWidth(), labelPoster.getHeight(), Image.SCALE_SMOOTH);
+                labelPoster.setIcon(new ImageIcon(scaledImg));
+
+                // Almacenar la imagen seleccionada y su longitud
+                fis = Files.readAllBytes(file.toPath());
+
+            } catch (IOException ex) {
+                System.out.println("Error al cargar la imagen: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btonModificarActionPerformed
+        Evento nuevoEvento = new Evento();
+        Ctrl_Evento controlEvento = new Ctrl_Evento();
+        Ctrl_Artista controlArtista = new Ctrl_Artista();
+        Ctrl_Localidades controlLocalidad = new Ctrl_Localidades();
+
+        if (txt_nombreEvento.getText().isEmpty() || txt_descripcionEvento.getText().isEmpty()
+                || txt_fecha.getText().isEmpty() || txt_hora.getText().isEmpty()
+                || txt_direccion.getText().isEmpty()
+                || txt_nombreArtista.getText().isEmpty() || txt_especialidad.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.");
+            return;
+        }
+
+// Verificar y crear el artista si no existe
+        int idArtista = controlArtista.obtenerIdPorNombre(txt_nombreArtista.getText().trim());
+        if (idArtista == -1) {
+            Artista nuevoArtista = new Artista();
+            nuevoArtista.setNombreArtista(txt_nombreArtista.getText().trim());
+            nuevoArtista.setEspecialidad(txt_especialidad.getText().trim());
+
+            // Guardar el artista y obtener su ID generado
+            idArtista = controlArtista.guardarArtistaObtenerID(nuevoArtista);
+        }
+
+// Crear un nuevo evento con la localidad, artista y la imagen obtenidos
+        nuevoEvento.setIdEvento(idEventoSeleccionado);  // Asegúrate de que el ID del evento seleccionado esté establecido
+        nuevoEvento.setNombreEvento(txt_nombreEvento.getText().trim());
+        nuevoEvento.setDescripcionEvento(txt_descripcionEvento.getText().trim());
+        nuevoEvento.setFecha(txt_fecha.getText().trim());
+        nuevoEvento.setHora(txt_hora.getText().trim());
+        nuevoEvento.setDireccion(txt_direccion.getText().trim());
+
+// Establecer el poster solo si se cargó una nueva imagen
+        if (fis != null) {
+            nuevoEvento.setPoster(fis);
+        } else {
+            // Si no se cargó una nueva imagen, conservar la existente
+            // Obtener el evento actual para conservar su poster
+            Evento eventoActual = controlEvento.obtenerEventoPorID(idEventoSeleccionado);
+            if (eventoActual != null) {
+                nuevoEvento.setPoster(eventoActual.getPoster());
+            }
+        }
+
+        nuevoEvento.setIdArtista(idArtista);
+        nuevoEvento.setIdUsuario(Ctrl_Usuario.obtenerUsuarioActivo().getIdUsuario());
+
+// Modificar el evento
+        boolean isUpdated = controlEvento.modificarEvento(nuevoEvento);
+        if (isUpdated) {
+            // Verificar si se ha seleccionado una localidad
+            if (idLocalidadSeleccionada != -1) {
+                // Modificar la localidad seleccionada
+                String nombreLocalidadText = nombreLocalidad.getText().trim();
+                float precioLocalidadValue = Float.parseFloat(precioLocalidad.getText().trim());
+                int cantidadDisponible = Integer.parseInt(cantidadLugares.getText().trim());
+
+                // Crear la nueva instancia de localidad con la información actualizada
+                Localidad localidadSeleccionada = new Localidad();
+                localidadSeleccionada.setIdLocalidad(idLocalidadSeleccionada); // Utilizar el ID de la localidad seleccionada
+                localidadSeleccionada.setTipoLocalidad(nombreLocalidadText);
+                localidadSeleccionada.setPrecio(precioLocalidadValue);
+                localidadSeleccionada.setEspaciosDisponibles(cantidadDisponible);
+
+                // Modificar la localidad en la base de datos
+                boolean isLocalidadUpdated = controlLocalidad.modificarLocalidad(localidadSeleccionada);
+                if (isLocalidadUpdated) {
+                    JOptionPane.showMessageDialog(null, "Evento y localidad modificados exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al modificar la localidad.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado una localidad para modificar.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al modificar el evento.");
+        }
+
+// Limpiar campos después de modificar
+        txt_nombreEvento.setText("");
+        txt_descripcionEvento.setText("");
+        txt_fecha.setText("");
+        txt_hora.setText("");
+        txt_direccion.setText("");
+        txt_nombreArtista.setText("");
+        txt_especialidad.setText("");
+
+// Recargar las localidades solo si se modificó alguna localidad
+        if (idLocalidadSeleccionada != -1) {
+            cargarLocalidades();
+        }
+    }//GEN-LAST:event_btonModificarActionPerformed
+
+    private void precioLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioLocalidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precioLocalidadActionPerformed
+
+    private void cantidadLugaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadLugaresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cantidadLugaresActionPerformed
+
+    private void nombreLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreLocalidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreLocalidadActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int row = tabla.getSelectedRow();
+        if (row != -1) {
+            idEventoSeleccionado = Integer.parseInt(tabla.getValueAt(row, 0).toString());
+            txt_nombreEvento.setText(tabla.getValueAt(row, 1).toString());
+            txt_descripcionEvento.setText(tabla.getValueAt(row, 2).toString());
+            txt_fecha.setText(tabla.getValueAt(row, 3).toString());
+            txt_hora.setText(tabla.getValueAt(row, 4).toString());
+            txt_direccion.setText(tabla.getValueAt(row, 5).toString());
+            txt_nombreArtista.setText(tabla.getValueAt(row, 6).toString());
+            txt_especialidad.setText(tabla.getValueAt(row, 7).toString());
+            // Obtener el byte[] del póster
+            byte[] posterBytes = (byte[]) tabla.getValueAt(row, 8);
+
+            // Convertir byte[] a Image
+            ImageIcon posterIcon = byteArrayToImageIcon(posterBytes);
+            if (posterIcon != null) {
+                Image scaledImg = posterIcon.getImage().getScaledInstance(labelPoster.getWidth(), labelPoster.getHeight(), Image.SCALE_SMOOTH);
+                labelPoster.setIcon(new ImageIcon(scaledImg));
+            } else {
+                labelPoster.setIcon(null);
+            }
+            cargarLocalidades();
+
+        }
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void comboBoxLocalidades1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxLocalidades1ActionPerformed
+        actualizarInfoDesdeComboBox();
+    }//GEN-LAST:event_comboBoxLocalidades1ActionPerformed
+
+    private void btonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btonEliminarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar este evento y todas sus dependencias?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            Ctrl_Evento controlEvento = new Ctrl_Evento();
+            Ctrl_Localidades controlLocalidad = new Ctrl_Localidades();
+            if (idEventoSeleccionado != -1) {
+                // Confirmar con el usuario antes de eliminar el evento
+               
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    // Intentar eliminar el evento
+                    boolean isEventoDeleted = controlEvento.eliminarEvento(idEventoSeleccionado);
+                    if (isEventoDeleted) {
+                        JOptionPane.showMessageDialog(null, "Evento y localidades eliminados exitosamente.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al eliminar el evento o sus localidades.");
+                    }
+                    // Limpiar campos después de eliminar
+                    txt_nombreEvento.setText("");
+                    txt_descripcionEvento.setText("");
+                    txt_fecha.setText("");
+                    txt_hora.setText("");
+                    txt_direccion.setText("");
+                    txt_nombreArtista.setText("");
+                    txt_especialidad.setText("");
+                    labelPoster.setIcon(null);
+                    idEventoSeleccionado = -1; // Reiniciar el ID del evento seleccionado
+                    initTabla(Ctrl_Usuario.obtenerUsuarioActivo().getIdUsuario()); // Volver a cargar la tabla de eventos
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún evento para eliminar.");
+            }
+        }
+    }//GEN-LAST:event_btonEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,26 +652,57 @@ public class VerTusEventos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JScrollPane JScroll;
+    private javax.swing.JButton btonEliminar;
+    private javax.swing.JButton btonModificar;
+    public javax.swing.JTextField cantidadLugares;
+    private javax.swing.JComboBox<String> comboBoxLocalidades1;
+    public javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    public javax.swing.JLabel labelPoster;
+    public javax.swing.JTextField nombreLocalidad;
+    public javax.swing.JTextField precioLocalidad;
     public static javax.swing.JTable tabla;
+    public javax.swing.JTextField txt_descripcionEvento;
+    public javax.swing.JTextField txt_direccion;
+    public javax.swing.JTextField txt_especialidad;
+    public javax.swing.JFormattedTextField txt_fecha;
+    public javax.swing.JFormattedTextField txt_hora;
+    public javax.swing.JTextField txt_nombreArtista;
+    public javax.swing.JTextField txt_nombreEvento;
     // End of variables declaration//GEN-END:variables
 
-   private void initTabla(int idUsuario) {
+    private void initTabla(int idUsuario) {
         DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
         modeloTabla.setRowCount(0);
 
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("SELECT nombre_evento, descripcion_evento, fecha, hora, direccion, poster FROM eventos WHERE id_usuario ="+idUsuario+"");
+            String sql = "SELECT e.id_evento, e.nombre_evento, e.descripcion_evento, e.fecha, e.hora, e.direccion, e.poster, a.nombre_artista, a.especialidad "
+                    + "FROM eventos e "
+                    + "JOIN artistas a ON e.id_artista = a.id_artista "
+                    + "WHERE e.id_usuario = ?";
+            PreparedStatement consulta = cn.prepareStatement(sql);
+            consulta.setInt(1, idUsuario);
             ResultSet rs = consulta.executeQuery();
             while (rs.next()) {
+                Integer idEvento = rs.getInt("id_evento");
                 String nombreEvento = rs.getString("nombre_evento");
                 String descripcionEvento = rs.getString("descripcion_evento");
                 String fechaEvento = rs.getString("fecha");
                 String horaEvento = rs.getString("hora");
                 String direccionEvento = rs.getString("direccion");
+                String nombreArtista = rs.getString("nombre_artista");
+                String especialidad = rs.getString("especialidad");
                 byte[] poster = rs.getBytes("poster");
-                modeloTabla.addRow(new Object[]{nombreEvento,descripcionEvento,fechaEvento,horaEvento,direccionEvento, poster});
+
+                modeloTabla.addRow(new Object[]{idEvento, nombreEvento, descripcionEvento, fechaEvento, horaEvento, direccionEvento, nombreArtista, especialidad, poster});
             }
             cn.close();
         } catch (SQLException ex) {
@@ -173,12 +710,12 @@ public class VerTusEventos extends javax.swing.JFrame {
         }
 
         // Establecer el renderizador de celdas para la columna del póster
-        tabla.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+        tabla.getColumnModel().getColumn(8).setCellRenderer(new ImageRenderer());  // Ajustar el índice si es necesario
         // Establecer la altura de las filas para que el póster se muestre más grande
-        tabla.setRowHeight(240); // Ajustar la altura de las filas para adaptarse al tamaño del póster
+        tabla.setRowHeight(140); // Ajustar la altura de las filas para adaptarse al tamaño del póster
 
         // Establecer el estilo de la fuente para el título y la descripción
-        tabla.setFont(new Font("Arial", Font.BOLD, 14)); // Establecer la fuente en negrita con tamaño de 12 puntos
+        tabla.setFont(new Font("Arial", Font.BOLD, 14)); // Establecer la fuente en negrita con tamaño de 14 puntos
     }
 
 // Clase interna para renderizar las celdas de la columna del póster como imágenes
@@ -196,12 +733,65 @@ public class VerTusEventos extends javax.swing.JFrame {
             if (value != null) {
                 // Escalar la imagen al tamaño deseado
                 ImageIcon icon = new ImageIcon((byte[]) value);
-                Image image = icon.getImage().getScaledInstance(180, 240, Image.SCALE_SMOOTH);
+                Image image = icon.getImage().getScaledInstance(100, 140, Image.SCALE_SMOOTH);
                 label.setIcon(new ImageIcon(image)); // Convierte el valor a un ImageIcon y lo establece en el JLabel
             } else {
                 label.setIcon(null);
             }
             return label;
         }
+    }
+
+    private ImageIcon byteArrayToImageIcon(byte[] bytes) {
+        try {
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            BufferedImage bufferedImage = ImageIO.read(bais);
+            return new ImageIcon(bufferedImage);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public void actualizarInfoDesdeComboBox() {
+        // Obtener la selección actual del combo box
+        String seleccion = (String) comboBoxLocalidades1.getSelectedItem();
+
+        // Dividir el texto para obtener los valores individuales
+        String[] partes = seleccion.split(" - ");
+
+        // Verificar si el array tiene el tamaño esperado
+        if (partes.length == 4) {
+            // Obtener el ID de la localidad seleccionada
+            int idLocalidad = Integer.parseInt(partes[0].trim());
+
+            // Obtener los valores de la selección
+            String nombreLocalidadText = partes[1];
+            float precioLocalidadValue = Float.parseFloat(partes[2].split(": ")[1].replace(",", "."));
+            int cantidadDisponible = Integer.parseInt(partes[3].split(": ")[1]);
+
+            // Actualizar los JTextFields con la información obtenida
+            nombreLocalidad.setText(nombreLocalidadText);
+            precioLocalidad.setText(String.valueOf(precioLocalidadValue));
+            cantidadLugares.setText(String.valueOf(cantidadDisponible));
+
+            // Guardar el ID de la localidad seleccionada para su posterior modificación
+            idLocalidadSeleccionada = idLocalidad;
+        }
+    }
+
+    private void cargarLocalidades() {
+        Ctrl_Localidades ctrlLocalidades = new Ctrl_Localidades();
+        List<Localidad> localidades = ctrlLocalidades.cargarLocalidades(idEventoSeleccionado);
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (Localidad localidad : localidades) {
+            String item = String.format("%d - %s - Precio: %.2f - Cantidad: %d",
+                    localidad.getIdLocalidad(),
+                    localidad.getTipoLocalidad(),
+                    localidad.getPrecio(),
+                    localidad.getEspaciosDisponibles());
+            model.addElement(item);
+        }
+        comboBoxLocalidades1.setModel(model);
     }
 }

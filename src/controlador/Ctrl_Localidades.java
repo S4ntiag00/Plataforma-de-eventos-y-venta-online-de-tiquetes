@@ -83,12 +83,11 @@ public class Ctrl_Localidades {
 
         return idLocalidad;
     }
-    
+
     public float obtenerPrecioLocalidad(int idLocalidad) {
         // Lógica para obtener el precio de una localidad en la base de datos
         String query = "SELECT precio FROM Localidades WHERE id_localidad = ?";
-        try (Connection connection = Conexion.conectar();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = Conexion.conectar(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, idLocalidad);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -99,5 +98,54 @@ public class Ctrl_Localidades {
             e.printStackTrace();
         }
         return 0; // Si no se encuentra el precio, devuelve 0 o un valor predeterminado
+    }
+
+    public boolean actualizarEspaciosLocalidad(int idlocalidad, int espacios) {
+        Connection cn = Conexion.conectar();
+        try {
+            String sql = "UPDATE localidades SET espacios_disponibles = ? WHERE id_localidad = ?";
+            PreparedStatement consulta = cn.prepareStatement(sql);
+            consulta.setInt(1, espacios);
+            consulta.setInt(2, idlocalidad);
+
+            int filasAfectadas = consulta.executeUpdate();
+            cn.close();
+            return filasAfectadas > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el estado de la reserva: " + ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean modificarLocalidad(Localidad localidad) {
+        Connection cn = Conexion.conectar();
+        try {
+            String sql = "UPDATE localidades SET tipo_localidad = ?, precio = ?, espacios_disponibles = ? WHERE id_localidad = ?";
+            PreparedStatement consulta = cn.prepareStatement(sql);
+            consulta.setString(1, localidad.getTipoLocalidad());
+            consulta.setFloat(2, localidad.getPrecio());
+            consulta.setInt(3, localidad.getEspaciosDisponibles());
+            consulta.setInt(4, localidad.getIdLocalidad());
+            int rowsAffected = consulta.executeUpdate();
+            cn.close();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error al modificar la localidad: " + ex.getMessage());
+            return false;
+        }
+    }
+
+    // Método para eliminar todas las localidades asociadas a un evento por su ID
+    public boolean eliminarLocalidadesPorEvento(int idEvento) {
+        String sql = "DELETE FROM Localidades WHERE id_evento = ?";
+        try (PreparedStatement pstmt = Conexion.conectar().prepareStatement(sql)) {
+            pstmt.setInt(1, idEvento);
+            int rowsAffected = pstmt.executeUpdate();
+            // Verificar si se eliminaron las localidades correctamente (si se afectó al menos una fila)
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

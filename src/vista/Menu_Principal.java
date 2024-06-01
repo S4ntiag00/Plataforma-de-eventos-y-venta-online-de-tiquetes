@@ -681,6 +681,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 evento.setNombreEvento(rs.getString("nombre_evento"));
                 // Corrige el nombre de columna aquí
                 evento.setDescripcionEvento(rs.getString("descripcion_evento"));
+                evento.setDireccion(rs.getString("direccion"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
                 byte[] bytePoster = rs.getBytes("poster");
@@ -707,6 +708,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                 evento.setIdEvento(rs.getInt("id_evento"));
                 evento.setNombreEvento(rs.getString("nombre_evento"));
                 evento.setDescripcionEvento(rs.getString("descripcion_evento"));
+                evento.setDireccion(rs.getString("direccion"));
                 evento.setFecha(rs.getString("fecha"));
                 evento.setHora(rs.getString("hora"));
                 // Obtener el póster como un array de bytes y establecerlo directamente
@@ -725,13 +727,16 @@ public class Menu_Principal extends javax.swing.JFrame {
     private void mostrarDetallesEvento(Evento evento) {
         if (evento != null) {
             int idEvento = evento.getIdEvento();
-            Detalles_Evento detallesEvento = new Detalles_Evento(idEvento); // Pasar idEvento al constructor
-
+            Detalles_Evento detallesEvento = new Detalles_Evento(idEvento); 
+            Artista artista = obtenerArtistaPorID(evento.getIdArtista());
             detallesEvento.setNombreEvento(evento.getNombreEvento());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
             detallesEvento.setPoster(evento.getPoster());
             detallesEvento.setHora(evento.getHora());
             detallesEvento.setFecha(evento.getFecha());
+            detallesEvento.setDireccionEvento(evento.getDireccion());
+            detallesEvento.setArtista(artista.getNombreArtista());
+            detallesEvento.setEspecialidad(artista.getEspecialidad());
             detallesEvento.setDescripcionEvento(evento.getDescripcionEvento());
 
             detallesEvento.setVisible(true);
